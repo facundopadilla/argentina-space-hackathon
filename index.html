@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hackathon Argentina Space 2026: 11 y 12 de noviembre en el Centro de Convenciones de Salta. Dos días para crear soluciones para la economía espacial argentina. Inscripciones próximamente.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#000D21">
+  <title>Hackathon Argentina Space 2026 · 11 y 12 de noviembre · Salta</title>
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_AR">
+  <meta property="og:title" content="Hackathon Argentina Space 2026">
+  <meta property="og:description" content="11 y 12 de noviembre de 2026, Centro de Convenciones de Salta. Dos días para crear soluciones para la economía espacial argentina.">
+  <!-- TODO(og): reemplazar por la URL absoluta definitiva cuando se publique el dominio -->
+  <meta property="og:image" content="/assets/photos/fondo_tierra_orbita.jpg">
+
+  <link rel="icon" href="assets/logo/isotipo_estrella_naranja.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Montserrat:wght@400;500;600;700&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/site.css">
+
+  <style>
+    /* ============================================================
+       Estilos propios de la página del hackathon.
+       Todo lo reutilizable vive en design-system/tokens.css.
+       ============================================================ */
+
+    /* ---------- Portada (Patrón E del manual) ----------
+       La barra de navegación es sticky (ocupa flujo, no superpone):
+       la portada descuenta su alto para que la composición completa
+       (logo, bajada y año en las esquinas) entre en el primer viewport. */
+    .hero {
+      position: relative;
+      min-height: calc(100svh - var(--nav-h));
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      /* Degradado de la portada del manual: queda como base debajo del
+         video/poster y como respaldo si la imagen no carga. */
+      background: radial-gradient(ellipse 120% 90% at 50% 42%, var(--color-night-navy) 0%, var(--color-space-black) 72%);
+    }
+
+    /* ---------- Fondo de video de la portada ----------
+       El poster (fotografía del manual, pág. 12) cubre el fondo mientras
+       no exista el loop de video. Veladura de marca en dos capas sobre
+       el medio: piso sólido #000D21 al 65% + radial #002654 al 60% en el
+       centro → #000D21 al 80% en los bordes (el degradado de la portada
+       a opacidad reducida). Contraste calculado, no estimado: el punto
+       más brillante medido en la fotografía es blanco puro (cuerpo del
+       satélite, luminancia relativa 1.0). Compuesto bajo la veladura
+       queda en luminancia ≈0.046, que garantiza en el peor punto:
+       blanco 10.9:1 · blanco-75 6.9:1 · cian 8.3:1 (mínimo exigido 4.5:1). */
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      transform-origin: 50% 40%;
+    }
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .hero-veil {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 120% 90% at 50% 42%, rgb(0 38 84 / 0.6) 0%, rgb(0 13 33 / 0.8) 72%),
+        rgb(0 13 33 / 0.65);
+    }
+    /* Control de pausa del video de fondo (WCAG 2.2.2). Aparece solo
+       cuando el video tiene datos reproducibles; mientras el poster
+       cubre la portada permanece oculto. El anillo de foco cian lo
+       aporta el :focus-visible global del design system. */
+    .hero-video-toggle {
+      position: absolute;
+      z-index: 2;
+      top: 18px;
+      right: var(--spacing-gutter);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid var(--color-white-12);
+      background: rgb(0 13 33 / 0.6);
+      color: var(--color-white-90);
+      cursor: pointer;
+      transition:
+        border-color 0.25s var(--ease-out-quart),
+        color 0.25s var(--ease-out-quart),
+        transform 0.16s var(--ease-out-quart);
+    }
+    .hero-video-toggle:hover {
+      border-color: var(--color-ion-cyan);
+      color: var(--color-ion-cyan);
+    }
+    .hero-video-toggle:active {
+      transform: scale(0.96);
+    }
+    .hero-video-toggle svg {
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+    }
+    .hero-video-toggle .icon-play { display: none; }
+    .hero-video-toggle[aria-pressed="true"] .icon-pause { display: none; }
+    .hero-video-toggle[aria-pressed="true"] .icon-play { display: block; }
+    .hero-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px var(--spacing-gutter);
+      position: relative;
+      z-index: 1;
+    }
+    .hero-logo {
+      width: min(460px, 74vw);
+      height: auto;
+    }
+    .hero-title {
+      margin-top: var(--spacing-fluid-md);
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(1.15rem, 0.8rem + 2vw, 2rem);
+      line-height: 1.4;
+      color: var(--color-white);
+    }
+    .hero-meta {
+      margin-top: 14px;
+      font-family: var(--font-alt);
+      font-size: clamp(0.9rem, 0.85rem + 0.4vw, 1.05rem);
+      letter-spacing: 0.04em;
+      color: var(--color-ion-cyan);
+    }
+    .hero-lede {
+      margin-top: 12px;
+      max-width: 48ch;
+      color: var(--color-white-75);
+      font-size: clamp(0.95rem, 0.9rem + 0.3vw, 1.05rem);
+    }
+    .hero-ctas {
+      margin-top: var(--spacing-fluid-sm);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+    }
+    .hero-corners {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 var(--spacing-gutter) clamp(24px, 4vw, 44px);
+    }
+    .hero-tagline {
+      font-family: var(--font-display);
+      font-size: clamp(0.62rem, 0.55rem + 0.5vw, 0.85rem);
+      line-height: 1.7;
+      letter-spacing: 0.06em;
+      color: var(--color-white-75);
+    }
+    .hero-year {
+      font-family: var(--font-display);
+      font-size: clamp(1.1rem, 0.9rem + 1.4vw, 1.9rem);
+      color: var(--color-white);
+      line-height: 1;
+    }
+    /* Entrada orquestada de la portada (una sola vez, al cargar). */
+    @keyframes hero-fade-up {
+      from { opacity: 0; transform: translateY(26px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-logo { animation: hero-fade-up 0.9s var(--ease-out-expo) 0.15s both; }
+    .hero-title { animation: hero-fade-up 0.9s var(--ease-out-expo) 0.3s both; }
+    .hero-meta { animation: hero-fade-up 0.9s var(--ease-out-expo) 0.42s both; }
+    .hero-lede { animation: hero-fade-up 0.9s var(--ease-out-expo) 0.52s both; }
+    .hero-ctas { animation: hero-fade-up 0.9s var(--ease-out-expo) 0.62s both; }
+    .hero-corners { animation: hero-fade-up 0.9s var(--ease-out-expo) 0.75s both; }
+
+    /* ---------- Marca de la barra de navegación ----------
+       El logotipo horizontal no se comprime: el espacio lo cede la
+       fila de chips, que ya desplaza horizontalmente en mobile. */
+    .navbar-brand {
+      flex: none;
+    }
+
+    /* ---------- CTA de la barra de navegación ----------
+       Fuera del rango donde la fila de chips entra completa (ver
+       punto de quiebre más abajo) el CTA de la barra se retira del
+       flujo: es la causa raíz del ghost hit-target. Con overflow-x
+       auto, un chip parcialmente desplazado fuera del scrollport
+       conserva un rect geométrico más ancho que su porción visible
+       (getBoundingClientRect no lo recorta); si ese rect cae sobre
+       el próximo elemento interactivo de la barra, cualquier cálculo
+       de "centro del chip" — un script, un lector de pantalla, o el
+       ojo de una persona guiándose por dónde termina el texto —
+       puede resolver en el CTA en lugar del chip. Sacar el CTA de la
+       barra en todo el rango donde los chips se recortan elimina el
+       elemento con el que confundirse; el CTA del hero (#inscripcion,
+       alcanzable con scroll) sigue disponible. */
+    .navbar-cta {
+      flex: none;
+      min-height: 44px;
+      padding: 8px 18px;
+      font-size: 0.8rem;
+    }
+    /* Selector acotado a .navbar-inner: el CTA duplicado dentro de
+       .navbar-panel no debe ocultarse por esta regla — ese es el
+       único CTA de navegación disponible bajo 1100px. */
+    @media (max-width: 1099.98px) {
+      .navbar-inner > .navbar-cta { display: none; }
+    }
+
+    /* ---------- Punto de quiebre chips ↔ menú hamburguesa ----------
+       Medido: la fila completa de 8 chips + marca + CTA necesita
+       ~1073px de ancho natural en este navbar; bajo 1100px (con
+       margen) no entra sin comprimir — ahí es exactamente donde se
+       reproducía el ghost hit-target (chips recortados junto al CTA,
+       a 768/1024px).
+
+       Sin degradación por falta de JS: por defecto (sin la clase
+       .has-navbar-menu, que solo se agrega al confirmar que el
+       toggle quedó cableado) la fila de chips permanece visible en
+       todos los anchos — y como el CTA ya se retiró del flujo en
+       este mismo rango (regla anterior), no queda ningún elemento
+       interactivo con el que un chip recortado pueda confundirse. El
+       botón de menú es un reemplazo, no un requisito: solo se
+       muestra cuando el JS puede garantizar foco, Escape y cierre
+       por click-fuera (el panel ya arranca oculto por el atributo
+       [hidden] del propio markup, con o sin JS). */
+    html.has-navbar-menu .navbar-toggle {
+      display: inline-flex;
+    }
+    @media (max-width: 1099.98px) {
+      html.has-navbar-menu .navbar-links {
+        display: none;
+      }
+    }
+
+    /* ---------- Declaración (Patrón E del manual, página 2) ----------
+       Veladura #000D21 a 75% de opacidad sobre la fotografía: la zona
+       más clara medida en la imagen (halo atmosférico, ~rgb(202 227 250))
+       queda en luminancia relativa ≈0.053, lo que garantiza ≥ 4.5:1 para
+       texto blanco 90% incluso en el punto más brillante de la foto
+       (mínimo matemático: 54% de opacidad; se usa 75% con margen). */
+    .declaration {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: clamp(320px, 42vw, 480px);
+      overflow: hidden;
+    }
+    .declaration > img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .declaration::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgb(0 13 33 / 0.75);
+    }
+    .declaration-text {
+      position: relative;
+      z-index: 1;
+      max-width: 56ch;
+      padding: clamp(28px, 5vw, 64px);
+      text-align: center;
+      color: var(--color-white-90);
+      font-size: clamp(1rem, 0.95rem + 0.5vw, 1.2rem);
+      line-height: 1.75;
+      font-weight: 500;
+    }
+    .declaration-text p + p { margin-top: 1.2em; }
+
+    /* ---------- Secciones ---------- */
+    .page-section {
+      padding-block: var(--spacing-section);
+    }
+    .page-section + .page-section {
+      border-top: 1px solid var(--color-white-08);
+    }
+
+    /* ---------- 01 · Tracks ---------- */
+    .track-grid {
+      display: grid;
+      /* min(…, 100%) evita que la pista mínima desborde la columna en 320px */
+      grid-template-columns: repeat(auto-fit, minmax(min(290px, 100%), 1fr));
+      gap: clamp(20px, 3vw, 32px);
+    }
+    .track {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .sector-frame-tag h3 {
+      margin: 0;
+      font: inherit;
+      letter-spacing: inherit;
+      color: inherit;
+    }
+    .track-stage {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      display: grid;
+      place-items: center;
+    }
+    .track-stage .track-iso {
+      position: relative;
+      z-index: 1;
+      width: clamp(90px, 26%, 130px);
+      height: auto;
+    }
+    .track-stage-tag {
+      position: absolute;
+      z-index: 2;
+      top: clamp(14px, 3vw, 26px);
+      left: clamp(14px, 3vw, 26px);
+      font-family: var(--font-display);
+      font-size: clamp(0.85rem, 0.7rem + 0.8vw, 1.15rem);
+      letter-spacing: 0.08em;
+      color: var(--color-white);
+      margin: 0;
+    }
+    .track-body {
+      padding: 18px 4px 0;
+    }
+    .track-body p {
+      font-size: 0.95rem;
+      color: var(--color-white-75);
+      max-width: 48ch;
+    }
+
+    /* ---------- 02 · Agenda ---------- */
+    .timeline {
+      display: grid;
+      gap: var(--spacing-fluid-md);
+    }
+    @media (min-width: 768px) {
+      .timeline {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-fluid-lg);
+      }
+    }
+    .timeline-day { min-width: 0; }
+    .timeline-day-head {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 6px 14px;
+      margin-bottom: 22px;
+    }
+    .timeline-day-head h3 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: var(--text-display-md);
+      line-height: var(--text-display-md--line-height);
+      color: var(--color-white);
+    }
+    .timeline-day-date {
+      font-family: var(--font-alt);
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      color: var(--color-ion-cyan);
+    }
+    .timeline-track {
+      position: relative;
+    }
+    .timeline-items {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      position: relative;
+    }
+    /* Riel orbital: guía tenue de acero (::before) + trazo SVG que el
+       scroll dibuja por encima. Sin JS o con movimiento reducido el
+       trazo SVG queda dibujado completo: mismo riel que siempre. */
+    .timeline-items::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      bottom: 12px;
+      left: 3.5px;
+      width: 1px;
+      background: rgb(84 97 117 / 0.16);
+    }
+    .timeline-rail {
+      /* El SVG es un elemento reemplazado: top + bottom no lo estiran,
+         necesita alto explícito (alto del riel menos 10px arriba y
+         12px abajo, la misma geometría que la guía ::before). */
+      position: absolute;
+      top: 10px;
+      left: 3px;
+      width: 2px;
+      height: calc(100% - 22px);
+      overflow: visible;
+      pointer-events: none;
+    }
+    .timeline-rail-path {
+      fill: none;
+      stroke: rgb(84 97 117 / 0.55);
+      stroke-width: 1.5;
+    }
+    .timeline-item {
+      position: relative;
+      padding-left: 30px;
+      min-width: 0;
+    }
+    .timeline-item + .timeline-item { margin-top: 20px; }
+    .timeline-item .orbit-dot { top: 7px; left: 0; }
+    .timeline-item h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-white-90);
+    }
+    .timeline-item p {
+      margin-top: 2px;
+      font-size: 0.9rem;
+      color: var(--color-white-60);
+      max-width: 46ch;
+    }
+
+    /* ---------- 03 · Premios ---------- */
+    .premios-teaser {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      text-align: center;
+      padding: clamp(40px, 7vw, 80px) clamp(20px, 5vw, 64px);
+    }
+    /* La retícula radial queda fuera de la regla: si recibiera
+       position: relative volvería al flujo y estiraría la tarjeta. */
+    .premios-teaser > :not(.radial-grid) {
+      position: relative;
+      z-index: 1;
+    }
+    .premios-teaser .radial-grid {
+      top: 50%;
+      left: 50%;
+      width: min(760px, 135%);
+      transform: translate(-50%, -50%);
+    }
+    .premios-teaser h3 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: var(--text-display-lg);
+      line-height: var(--text-display-lg--line-height);
+      color: var(--color-white);
+    }
+    .premios-teaser p {
+      max-width: 52ch;
+      color: var(--color-white-75);
+    }
+    .premios-note {
+      font-size: 0.85rem;
+      color: var(--color-white-60);
+    }
+
+    /* ---------- 04 · Organizadores ---------- */
+    .org-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+      gap: 20px;
+      align-items: stretch;
+    }
+    .org-card {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+      min-width: 0;
+    }
+    .org-card img {
+      height: 32px;
+      width: auto;
+    }
+    .org-card h3 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: var(--text-display-md);
+      line-height: var(--text-display-md--line-height);
+      color: var(--color-white);
+    }
+    .org-card p {
+      font-size: 0.95rem;
+      color: var(--color-white-75);
+      max-width: 48ch;
+    }
+
+    /* ---------- 05 · Recursos ---------- */
+    .resource-group + .resource-group {
+      margin-top: var(--spacing-fluid-lg);
+    }
+    .resource-group > h3 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: var(--text-display-md);
+      line-height: var(--text-display-md--line-height);
+      color: var(--color-white);
+      margin-bottom: 8px;
+    }
+    .resource-guide {
+      color: var(--color-white-60);
+      font-size: 0.92rem;
+      max-width: 65ch;
+      margin-bottom: 20px;
+    }
+    .resource-doc {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px 18px;
+      padding: 16px 0;
+      border-top: 1px solid var(--color-white-08);
+    }
+    .resource-doc:last-of-type {
+      border-bottom: 1px solid var(--color-white-08);
+    }
+    .resource-doc-info {
+      min-width: 0;
+      max-width: 58ch;
+    }
+    .resource-doc-info strong {
+      display: block;
+      font-weight: 600;
+      color: var(--color-white-90);
+    }
+    .resource-doc-info span {
+      font-size: 0.88rem;
+      color: var(--color-white-60);
+    }
+    .resource-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    /* ---------- Sponsors ---------- */
+    .sponsor-acronym {
+      font-weight: 700;
+      font-size: 1.35rem;
+      letter-spacing: 0.06em;
+      line-height: 1;
+      color: var(--color-white-75);
+    }
+    .sponsor-cta {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px 28px;
+    }
+    .sponsor-cta-info {
+      min-width: 0;
+      max-width: 58ch;
+    }
+    .sponsor-cta-info h3 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: var(--text-display-md);
+      line-height: var(--text-display-md--line-height);
+      color: var(--color-white);
+      margin-bottom: 6px;
+    }
+    .sponsor-cta-info p {
+      font-size: 0.95rem;
+      color: var(--color-white-75);
+    }
+
+    /* ---------- Cierre · Inscripción (Patrón E) ---------- */
+    .closing {
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(ellipse 120% 90% at 50% 40%, var(--color-night-navy) 0%, var(--color-space-black) 72%);
+      padding-block: var(--spacing-section);
+    }
+    .closing-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 18px;
+    }
+    .closing-inner h2 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: var(--text-display-xl);
+      line-height: var(--text-display-xl--line-height);
+      color: var(--color-white);
+      max-width: 22ch;
+    }
+    .closing-copy {
+      max-width: 54ch;
+      color: var(--color-white-75);
+      font-size: clamp(1rem, 0.95rem + 0.4vw, 1.15rem);
+    }
+    .closing-inner .form-hint {
+      max-width: 46ch;
+    }
+
+    /* ---------- Revelado al hacer scroll ----------
+       La coreografía vive en GSAP + ScrollTrigger (script al final del
+       documento). El CSS no declara ningún estado oculto: sin JS, con
+       librerías ausentes o con movimiento reducido todo el contenido
+       es visible por defecto. Los atributos data-reveal son solo
+       ganchos para el script. */
+
+    /* ---------- Retícula radial técnica (manual, pág. 4) ----------
+       Anillos concéntricos finos + ejes cruz en acero de bajo
+       contraste. Motivo decorativo puro: sin brillos ni desenfoques,
+       nunca interfiere con la lectura. */
+    .radial-grid {
+      position: absolute;
+      aspect-ratio: 1;
+      pointer-events: none;
+    }
+    .closing .radial-grid {
+      top: 50%;
+      left: 50%;
+      width: min(920px, 150vw);
+      transform: translate(-50%, -50%);
+    }
+
+    /* ---------- FAQ (sección sin numerar) ---------- */
+    .faq-list {
+      max-width: 72ch;
+    }
+    .faq-item {
+      border-top: 1px solid var(--color-white-08);
+    }
+    .faq-item:last-of-type {
+      border-bottom: 1px solid var(--color-white-08);
+    }
+    .faq-summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 56px;
+      padding: 16px 4px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--color-white-90);
+      list-style: none;
+      transition: color 0.25s var(--ease-brand);
+    }
+    .faq-summary::-webkit-details-marker { display: none; }
+    .faq-summary:hover { color: var(--color-white); }
+    .faq-summary::after {
+      content: "";
+      flex: none;
+      width: 16px;
+      height: 16px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%2348F6FF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+      transition: transform 0.22s var(--ease-out-quart);
+    }
+    .faq-item[open] > .faq-summary::after {
+      transform: rotate(-180deg);
+    }
+    .faq-body {
+      overflow: hidden;
+    }
+    .faq-body-inner {
+      padding: 0 4px 20px;
+    }
+    .faq-body-inner p {
+      font-size: 0.95rem;
+      color: var(--color-white-75);
+      max-width: 65ch;
+    }
+    .faq-body-inner p + p {
+      margin-top: 0.8em;
+    }
+
+    /* ---------- Lenis (scroll inercial) ----------
+       Anulan el scroll-behavior de CSS mientras Lenis controla el
+       desplazamiento. La guarda usa html.lenis (clase permanente):
+       en Lenis 1.3.x la clase lenis-smooth es transitoria — solo
+       existe durante un scrollTo programático — y con smooth activo
+       el navegador cancela a mitad de camino el salto nativo a
+       #fragmentos al inicializarse el sistema de movimiento. Sin
+       Lenis (sin JS o con movimiento reducido) la clase no está y
+       vuelve el scroll-behavior: smooth del design system. */
+    html.lenis,
+    html.lenis body {
+      height: auto;
+    }
+    html.lenis {
+      scroll-behavior: auto !important;
+    }
+    .lenis.lenis-stopped {
+      overflow: hidden;
+    }
+
+    /* ---------- Movimiento reducido ---------- */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-logo, .hero-title, .hero-meta, .hero-lede, .hero-ctas, .hero-corners {
+        animation: none;
+      }
+      .faq-summary,
+      .faq-summary::after {
+        transition: none;
+      }
+      .skip-link, .btn, .btn-circle, .code-copy, .navbar-link, .hero-video-toggle {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#contenido">Ir al contenido</a>
+
+  <!-- Navegación fija. Con JS activo (clase .has-navbar-menu en <html>)
+       y por debajo de 1100px, la fila de chips cede el lugar al botón
+       de menú; sin JS los chips desplazables siguen siendo la única
+       navegación, en todos los anchos. -->
+  <nav class="navbar" aria-label="Secciones del sitio">
+    <div class="navbar-inner">
+      <a class="navbar-brand" href="#inicio" aria-label="Argentina Space — ir al inicio">
+        <img src="assets/logo/logo_horizontal_positivo.png" alt="" width="1297" height="363" aria-hidden="true">
+      </a>
+      <div class="navbar-links">
+        <a class="navbar-link" href="#objetivo">El evento</a>
+        <a class="navbar-link" href="#tracks">Tracks</a>
+        <a class="navbar-link" href="#agenda">Agenda</a>
+        <a class="navbar-link" href="#premios">Premios</a>
+        <a class="navbar-link" href="#organizadores">Organizadores</a>
+        <a class="navbar-link" href="#recursos">Recursos</a>
+        <a class="navbar-link" href="#faq">FAQ</a>
+        <a class="navbar-link" href="#sponsors">Sponsors</a>
+      </div>
+      <a class="btn btn-primary navbar-cta" href="#inscripcion">Inscribite</a>
+      <!-- TODO(luma): al tener el ID del evento, reemplazar el enlace anterior por:
+      <button class="btn btn-primary navbar-cta" type="button"
+        data-luma-action="checkout" data-luma-event-id="LUMA_EVENT_ID">Inscribite</button>
+      y activar el script #luma-checkout al final del documento. -->
+      <button class="navbar-toggle" type="button" id="navbar-toggle"
+              aria-expanded="false" aria-controls="navbar-panel" aria-label="Abrir menú">
+        <span class="navbar-toggle-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="navbar-panel" id="navbar-panel" hidden>
+      <a class="navbar-link" href="#objetivo">El evento</a>
+      <a class="navbar-link" href="#tracks">Tracks</a>
+      <a class="navbar-link" href="#agenda">Agenda</a>
+      <a class="navbar-link" href="#premios">Premios</a>
+      <a class="navbar-link" href="#organizadores">Organizadores</a>
+      <a class="navbar-link" href="#recursos">Recursos</a>
+      <a class="navbar-link" href="#faq">FAQ</a>
+      <a class="navbar-link" href="#sponsors">Sponsors</a>
+      <a class="btn btn-primary navbar-cta" href="#inscripcion">Inscribite</a>
+    </div>
+  </nav>
+
+  <main id="contenido">
+
+    <!-- ============================================================
+         PORTADA · Patrón E: logotipo centrado sobre degradado radial
+         ============================================================ -->
+    <header class="hero" id="inicio">
+      <div class="hero-media" aria-hidden="true">
+        <!-- TODO(video): colocar el loop espacial (webm + mp4, ~10 s, sin audio) en
+             hackathon/assets/video/hero-loop.webm y hackathon/assets/video/hero-loop.mp4.
+             Mientras los archivos no existan, el poster (fotografía del manual,
+             pág. 12) cubre el fondo y la portada funciona igual.
+             Sin atributo autoplay a propósito: la reproducción la inicia el JS
+             solo cuando no hay preferencia de movimiento reducido, así la
+             garantía no depende de que el script cargue ni llegue a tiempo. -->
+        <video class="hero-video" muted loop playsinline preload="metadata"
+               poster="assets/photos/vision_satelite.jpg" width="1376" height="768">
+          <source src="assets/video/hero-loop.webm" type="video/webm">
+          <source src="assets/video/hero-loop.mp4" type="video/mp4">
+        </video>
+        <div class="hero-veil"></div>
+      </div>
+      <button class="hero-video-toggle" type="button" hidden
+              aria-label="Pausar el video de fondo" aria-pressed="false">
+        <svg class="icon-pause" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 2h3v12H4zM9 2h3v12H9z"/></svg>
+        <svg class="icon-play" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4.5 2.2 13.5 8l-9 5.8z"/></svg>
+      </button>
+      <div class="starfield" aria-hidden="true"></div>
+      <div class="hero-center">
+        <img class="hero-logo" src="assets/logo/logo_horizontal_positivo.png"
+             alt="Argentina Space: wordmark blanco con isotipo de estrella naranja y estela horizontal"
+             width="1297" height="363" fetchpriority="high">
+        <h1 class="hero-title">Hackathon Argentina Space 2026</h1>
+        <p class="hero-meta">11 y 12 de noviembre · Centro de Convenciones de Salta</p>
+        <p class="hero-lede">Dos días de trabajo intensivo para crear soluciones sobre los sectores donde la economía espacial argentina ya tiene impacto.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#inscripcion">Inscribite al hackathon</a>
+          <!-- TODO(luma): al tener el ID del evento, reemplazar el enlace anterior por:
+          <button class="btn btn-primary" type="button"
+            data-luma-action="checkout" data-luma-event-id="LUMA_EVENT_ID">Inscribite al hackathon</button>
+          y activar el script #luma-checkout al final del documento. -->
+          <a class="btn btn-ghost" href="#agenda">Ver agenda</a>
+        </div>
+      </div>
+      <div class="hero-corners">
+        <p class="hero-tagline">Del espacio como ciencia,<br>al espacio como mercado</p>
+        <p class="hero-year">2026</p>
+      </div>
+    </header>
+
+    <!-- ============================================================
+         POR QUÉ EXISTE · Patrón E: declaración centrada sobre
+         fotografía orbital (página 2 del manual)
+         ============================================================ -->
+    <section class="declaration" id="objetivo" aria-label="Por qué existe el hackathon">
+      <img src="assets/photos/fondo_tierra_orbita.jpg"
+           alt="La Tierra vista desde la órbita, con la curvatura terrestre y un halo atmosférico azul contra el cielo estrellado"
+           loading="lazy" decoding="async" width="1920" height="1080">
+      <div class="declaration-text" data-reveal>
+        <p>El hackathon convoca a desarrolladores, diseñadores, estudiantes y perfiles de negocio a resolver desafíos reales de los sectores productivos donde la economía espacial ya opera.</p>
+        <p>Argentina Space impulsa un ecosistema nacional con Salta como epicentro: dos días para transformar talento local en soluciones de escala global.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         01 · TRACKS
+         ============================================================ -->
+    <section class="page-section" id="tracks">
+      <div class="container-page">
+        <header class="section-head">
+          <p class="section-num"><span class="section-num-zero">0</span>1</p>
+          <h2 class="section-title">Tracks</h2>
+          <p class="section-lede">Tres desafíos alineados a los sectores del programa. Cada equipo elige un track y trabaja sobre problemas reales del sector durante las dos jornadas.</p>
+        </header>
+
+        <!-- SLOT(tracks): contenido interino editable; reemplazar títulos y
+             descripciones cuando se confirmen los desafíos definitivos. -->
+        <div class="track-grid">
+          <article class="track">
+            <figure class="sector-frame" data-reveal="mask">
+              <img class="sector-frame-dim" src="assets/photos/sector_mineria.jpg" alt=""
+                   loading="lazy" decoding="async" width="3051" height="1717" aria-hidden="true">
+              <img class="sector-frame-bright" src="assets/photos/sector_mineria.jpg"
+                   alt="Camión minero de gran porte en un yacimiento a cielo abierto, revelado en nitidez a través de la estrella del isotipo"
+                   loading="lazy" decoding="async" width="3051" height="1717">
+              <figcaption class="sector-frame-tag"><h3>Minería</h3></figcaption>
+              <span class="sector-frame-logo" aria-hidden="true">
+                <img src="assets/logo/logo_horizontal_positivo.png" alt=""
+                     loading="lazy" decoding="async" width="1297" height="363">
+              </span>
+            </figure>
+            <div class="track-body">
+              <p>Litio, cobre y la puna salteña: datos satelitales, monitoreo remoto y automatización para una minería más eficiente y trazable.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <figure class="sector-frame" data-reveal="mask">
+              <img class="sector-frame-dim" src="assets/photos/sector_agronomia.jpg" alt=""
+                   loading="lazy" decoding="async" width="2965" height="1617" aria-hidden="true">
+              <img class="sector-frame-bright" src="assets/photos/sector_agronomia.jpg"
+                   alt="Tractor trabajando un campo argentino, revelado en nitidez a través de la estrella del isotipo"
+                   loading="lazy" decoding="async" width="2965" height="1617">
+              <figcaption class="sector-frame-tag"><h3>Agronomía</h3></figcaption>
+              <span class="sector-frame-logo" aria-hidden="true">
+                <img src="assets/logo/logo_horizontal_positivo.png" alt=""
+                     loading="lazy" decoding="async" width="1297" height="363">
+              </span>
+            </figure>
+            <div class="track-body">
+              <p>Observación de la Tierra al servicio del campo: agricultura de precisión, riesgo climático y manejo inteligente de recursos.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="card card-navy track-stage" data-reveal>
+              <h3 class="track-stage-tag">New Space</h3>
+              <span class="orbit-ring" style="height: 68%; aspect-ratio: 1 / 1; top: 50%; left: 50%; transform: translate(-50%, -50%);" aria-hidden="true"></span>
+              <span class="orbit-dot" style="top: 33%; left: 72%; transform: translate(-50%, -50%);" aria-hidden="true"></span>
+              <span class="orbit-dot" style="top: 62%; left: 26%; transform: translate(-50%, -50%);" aria-hidden="true"></span>
+              <img class="track-iso" src="assets/logo/isotipo_estrella_cian.svg"
+                   alt="" width="220" height="220" aria-hidden="true">
+            </div>
+            <div class="track-body">
+              <p>Del espacio como ciencia, al espacio como mercado: servicios en órbita, datos satelitales y nueva infraestructura espacial.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         02 · AGENDA
+         ============================================================ -->
+    <section class="page-section" id="agenda">
+      <div class="container-page">
+        <header class="section-head">
+          <p class="section-num"><span class="section-num-zero">0</span>2</p>
+          <h2 class="section-title">Agenda</h2>
+          <p class="section-lede">Dos jornadas completas en el Centro de Convenciones de Salta. Los horarios detallados se publicarán antes del evento.</p>
+        </header>
+
+        <!-- SLOT(agenda): esqueleto interino editable; completar horarios y
+             actividades cuando se confirme la agenda definitiva. -->
+        <div class="timeline">
+          <div class="timeline-day">
+            <div class="timeline-day-head">
+              <h3>Día 1</h3>
+              <p class="timeline-day-date">Miércoles 11 de noviembre</p>
+            </div>
+            <div class="timeline-track">
+              <svg class="timeline-rail" aria-hidden="true" focusable="false"
+                   viewBox="0 0 2 1000" preserveAspectRatio="none">
+                <path class="timeline-rail-path" d="M1 0 L1 1000"/>
+              </svg>
+            <ol class="timeline-items">
+              <li class="timeline-item">
+                <span class="orbit-dot" aria-hidden="true"></span>
+                <h4>Acreditación</h4>
+                <p>Recepción de participantes y entrega de credenciales.</p>
+              </li>
+              <li class="timeline-item">
+                <span class="orbit-dot" aria-hidden="true"></span>
+                <h4>Apertura</h4>
+                <p>Bienvenida oficial y presentación de los tracks.</p>
+              </li>
+              <li class="timeline-item">
+                <span class="orbit-dot" aria-hidden="true"></span>
+                <h4>Formación de equipos</h4>
+                <p>Conformación de equipos y elección del desafío.</p>
+              </li>
+              <li class="timeline-item">
+                <span class="orbit-dot" aria-hidden="true"></span>
+                <h4>Trabajo</h4>
+                <p>Primera sesión de desarrollo de los proyectos.</p>
+              </li>
+              <li class="timeline-item">
+                <span class="orbit-dot" aria-hidden="true"></span>
+                <h4>Cierre del día</h4>
+                <p>Balance de la jornada y pautas para el día siguiente.</p>
+              </li>
+            </ol>
+            </div>
+          </div>
+
+          <div class="timeline-day">
+            <div class="timeline-day-head">
+              <h3>Día 2</h3>
+              <p class="timeline-day-date">Jueves 12 de noviembre</p>
+            </div>
+            <div class="timeline-track">
+              <svg class="timeline-rail" aria-hidden="true" focusable="false"
+                   viewBox="0 0 2 1000" preserveAspectRatio="none">
+                <path class="timeline-rail-path" d="M1 0 L1 1000"/>
+              </svg>
+            <ol class="timeline-items">
+              <li class="timeline-item">
+                <span class="orbit-dot" aria-hidden="true"></span>
+                <h4>Trabajo</h4>
+                <p>Segunda sesión de desarrollo de los proyectos.</p>
+              </li>
+              <li class="timeline-item">
+                <span class="orbit-dot" aria-hidden="true"></span>
+                <h4>Mentorías</h4>
+                <p>Rondas de consulta con mentores de cada track.</p>
+              </li>
+              <li class="timeline-item">
+                <span class="orbit-dot" aria-hidden="true"></span>
+                <h4>Entrega de proyectos</h4>
+                <p>Cierre del desarrollo y entrega para evaluación.</p>
+              </li>
+              <li class="timeline-item">
+                <span class="orbit-dot" aria-hidden="true"></span>
+                <h4>Pitches</h4>
+                <p>Presentación de los proyectos ante el jurado.</p>
+              </li>
+              <li class="timeline-item">
+                <span class="orbit-dot" aria-hidden="true"></span>
+                <h4>Premiación</h4>
+                <p>Anuncio de los equipos ganadores.</p>
+              </li>
+              <li class="timeline-item">
+                <span class="orbit-dot" aria-hidden="true"></span>
+                <h4>Cierre</h4>
+                <p>Cierre oficial del evento.</p>
+              </li>
+            </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         03 · PREMIOS (único acento naranja de la secuencia)
+         ============================================================ -->
+    <section class="page-section" id="premios">
+      <div class="container-page">
+        <header class="section-head section-head-orange">
+          <p class="section-num"><span class="section-num-zero">0</span>3</p>
+          <h2 class="section-title">Premios</h2>
+        </header>
+
+        <!-- SLOT(premios): reemplazar por los premios reales cuando se
+             confirmen; no publicar cifras hasta tener el anuncio oficial. -->
+        <div class="card card-navy premios-teaser" data-reveal>
+          <!-- Retícula radial técnica (manual, pág. 4): integra los anillos
+               orbitales previos en un solo motivo con ejes cruz. Los puntos
+               cian (nivel Meso) están calculados sobre la circunferencia:
+               (400, 200) en el anillo r=200 y (170.6, 239.4) en el r=280. -->
+          <svg class="radial-grid" aria-hidden="true" focusable="false" viewBox="0 0 800 800">
+            <g fill="none" stroke="rgb(84 97 117 / 0.3)" stroke-width="1">
+              <circle cx="400" cy="400" r="120"/>
+              <circle cx="400" cy="400" r="200"/>
+              <circle cx="400" cy="400" r="280"/>
+              <circle cx="400" cy="400" r="360" stroke="rgb(84 97 117 / 0.2)"/>
+              <line x1="400" y1="20" x2="400" y2="780" stroke="rgb(84 97 117 / 0.22)"/>
+              <line x1="20" y1="400" x2="780" y2="400" stroke="rgb(84 97 117 / 0.22)"/>
+            </g>
+            <circle cx="400" cy="200" r="4" fill="#48F6FF"/>
+            <circle cx="170.6" cy="239.4" r="3.5" fill="#48F6FF"/>
+          </svg>
+          <span class="badge badge-orange">Próximamente</span>
+          <h3>Los premios se anuncian junto con la apertura de inscripciones</h3>
+          <p>Habrá reconocimientos para los mejores proyectos de cada track. El detalle se publicará en este sitio y en los canales oficiales de Argentina Space.</p>
+          <p class="premios-note">Ninguna cifra es oficial hasta su publicación en este espacio.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         04 · ORGANIZADORES
+         ============================================================ -->
+    <section class="page-section" id="organizadores">
+      <div class="container-page">
+        <header class="section-head">
+          <p class="section-num"><span class="section-num-zero">0</span>4</p>
+          <h2 class="section-title">Organizadores</h2>
+          <p class="section-lede">El hackathon es organizado por Argentina Space junto a instituciones del ecosistema tecnológico y productivo.</p>
+        </header>
+
+        <!-- SLOT(organizadores): agregar una .card.org-card por cada
+             institución confirmada (logo, nombre, rol y enlace). -->
+        <div class="org-grid" data-reveal="stagger">
+          <article class="card card-navy org-card">
+            <img src="assets/logo/logo_horizontal_positivo.png"
+                 alt="Argentina Space: logotipo horizontal"
+                 loading="lazy" decoding="async" width="1297" height="363">
+            <span class="badge badge-outline">Organización general</span>
+            <p>Argentina Space impulsa el ecosistema nacional de economía espacial con Salta como epicentro, y lleva adelante la organización general del evento.</p>
+          </article>
+          <article class="card org-card">
+            <h3>Instituciones aliadas</h3>
+            <span class="badge badge-outline">En confirmación</span>
+            <p>Las instituciones que acompañan la organización del hackathon se anunciarán próximamente en este espacio.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         05 · RECURSOS
+         ============================================================ -->
+    <section class="page-section" id="recursos">
+      <div class="container-page">
+        <header class="section-head">
+          <p class="section-num"><span class="section-num-zero">0</span>5</p>
+          <h2 class="section-title">Recursos</h2>
+          <p class="section-lede">Todo lo necesario para participar: documentos oficiales, documentación técnica y los canales de la comunidad.</p>
+        </header>
+
+        <div class="resource-group">
+          <h3>Documentos oficiales</h3>
+          <p class="resource-guide">El reglamento y el código de conducta ya están disponibles; las bases y condiciones se publican antes de la apertura de inscripciones.</p>
+          <!-- SLOT(documentos): reemplazar cada insignia por un enlace
+               cuando el documento esté publicado. -->
+          <div class="resource-doc">
+            <div class="resource-doc-info">
+              <strong>Bases y condiciones</strong>
+              <span>Requisitos de participación, cronograma y criterios de evaluación.</span>
+            </div>
+            <span class="badge badge-outline">Disponible próximamente</span>
+          </div>
+          <div class="resource-doc">
+            <div class="resource-doc-info">
+              <strong>Reglamento</strong>
+              <span>Reglas de trabajo durante las dos jornadas del evento.</span>
+            </div>
+            <a class="btn btn-ghost" href="reglamento.html">Leer el reglamento</a>
+          </div>
+          <div class="resource-doc">
+            <div class="resource-doc-info">
+              <strong>Código de conducta</strong>
+              <span>Normas de convivencia para un evento seguro e inclusivo.</span>
+            </div>
+            <a class="btn btn-ghost" href="codigo-de-conducta.html">Leer el código</a>
+          </div>
+        </div>
+
+        <div class="resource-group">
+          <h3>Documentación técnica</h3>
+          <p class="resource-guide">Datasets, APIs y guías de trabajo se publicarán en este espacio antes del evento.</p>
+          <div class="code-panel">
+            <div class="code-panel-bar"><span>recursos-tecnicos.txt</span><button class="code-copy" type="button" data-copy>Copiar</button></div>
+            <pre><code>Recursos técnicos — Hackathon Argentina Space 2026
+
+Datasets satelitales ............ se publican antes del evento
+APIs y documentación ............ se publican antes del evento
+Guía de entrega de proyectos .... se publica antes del evento
+
+Consultas técnicas: marketing@argentinaspace.com</code></pre>
+          </div>
+        </div>
+
+        <div class="resource-group">
+          <h3>Comunidad y redes</h3>
+          <p class="resource-guide">Las novedades del evento se publican en los canales oficiales de Argentina Space y también llegan por correo.</p>
+          <div class="resource-doc-list">
+            <div class="resource-doc">
+              <div class="resource-doc-info">
+                <strong>Instagram</strong>
+                <span>Novedades y contenido del evento.</span>
+              </div>
+              <a class="btn btn-ghost" href="https://www.instagram.com/argentinaspace" target="_blank" rel="noopener noreferrer">Seguir en Instagram</a>
+            </div>
+            <div class="resource-doc">
+              <div class="resource-doc-info">
+                <strong>LinkedIn</strong>
+                <span>Anuncios institucionales del ecosistema.</span>
+              </div>
+              <a class="btn btn-ghost" href="https://www.linkedin.com/company/argentina-space/" target="_blank" rel="noopener noreferrer">Seguir en LinkedIn</a>
+            </div>
+          </div>
+          <div class="resource-links">
+            <a class="btn btn-ghost" href="mailto:marketing@argentinaspace.com">Correo del evento</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         FAQ (sin numerar: la secuencia 01–05 es la historia del
+         evento; las preguntas frecuentes la acompañan sin alterarla)
+         ============================================================ -->
+    <section class="page-section" id="faq">
+      <div class="container-page">
+        <header class="section-head">
+          <h2 class="section-title">Preguntas frecuentes</h2>
+          <p class="section-lede">Las dudas más comunes antes de inscribirse. Para cualquier otra consulta está disponible el correo del evento.</p>
+        </header>
+
+        <!-- SLOT(faq): respuestas interinas editables; ajustar cuando se
+             confirmen las bases, los costos y el proceso de inscripción. -->
+        <div class="faq-list" data-reveal="stagger">
+          <details class="faq-item">
+            <summary class="faq-summary">¿Quién puede participar?</summary>
+            <div class="faq-body">
+              <div class="faq-body-inner">
+                <p>El hackathon convoca a desarrolladores, diseñadores, estudiantes y perfiles de negocio interesados en la economía espacial. Los requisitos de participación se detallan en las bases y condiciones, que se publican antes de la apertura de inscripciones.</p>
+              </div>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-summary">¿Necesito venir con un equipo armado?</summary>
+            <div class="faq-body">
+              <div class="faq-body-inner">
+                <p>No es necesario: la agenda del primer día incluye un espacio de formación de equipos para quienes llegan sin grupo. También se puede participar con un equipo ya conformado, según las condiciones que fijen las bases.</p>
+              </div>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-summary">¿Cuánto cuesta participar?</summary>
+            <div class="faq-body">
+              <div class="faq-body-inner">
+                <p>El costo de participación se confirma junto con la apertura de inscripciones y se publica en este sitio y en los canales oficiales de Argentina Space.</p>
+              </div>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-summary">¿Qué hay que llevar?</summary>
+            <div class="faq-body">
+              <div class="faq-body-inner">
+                <p>Computadora personal, cargador y todo lo que el equipo necesite para trabajar durante las dos jornadas. El detalle de materiales y servicios disponibles en el Centro de Convenciones se publica junto con el reglamento.</p>
+              </div>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-summary">¿Sobre qué se trabaja?</summary>
+            <div class="faq-body">
+              <div class="faq-body-inner">
+                <p>Cada equipo elige uno de los tres tracks del evento —Minería, Agronomía y New Space— y desarrolla una solución sobre desafíos reales de ese sector. Los desafíos definitivos se presentan en la apertura.</p>
+              </div>
+            </div>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-summary">¿Cómo me inscribo?</summary>
+            <div class="faq-body">
+              <div class="faq-body-inner">
+                <p>La inscripción se realizará a través de Luma. Todavía no está abierta: al enviar un correo a la casilla del evento, el equipo responde por esa misma vía cuando se habilita.</p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SPONSORS (sin numerar: la secuencia 01–05 es la historia
+         del evento; el apoyo institucional va aparte)
+         ============================================================ -->
+    <section class="page-section" id="sponsors">
+      <div class="container-page">
+        <header class="section-head">
+          <h2 class="section-title">Con el apoyo de</h2>
+          <p class="section-lede">Empresas e instituciones que hacen posible el hackathon.</p>
+        </header>
+
+        <div class="sponsor-grid" data-reveal="stagger">
+          <a class="sponsor-tile" href="https://www.alchemia-tech.com/" target="_blank" rel="noopener noreferrer">
+            <img src="assets/sponsors/alchemia-blanco.jpg" alt="Alchemia LLC"
+                 loading="lazy" decoding="async" width="1160" height="188">
+            <span class="sponsor-tile-name">Alchemia LLC</span>
+          </a>
+          <a class="sponsor-tile" href="https://www.propulsar.ar/" target="_blank" rel="noopener noreferrer">
+            <img src="assets/sponsors/propulsar-blanco.jpg" alt="Propulsar — Argentina Space Cluster"
+                 loading="lazy" decoding="async" width="1000" height="156">
+            <span class="sponsor-tile-name">Propulsar</span>
+          </a>
+          <a class="sponsor-tile" href="https://salta.dev/" target="_blank" rel="noopener noreferrer">
+            <img src="assets/sponsors/saltadev-logo.png" alt="SaltaDev"
+                 loading="lazy" decoding="async" width="1400" height="895">
+            <span class="sponsor-tile-name">SaltaDev</span>
+          </a>
+          <a class="sponsor-tile" href="https://municipalidadsalta.gob.ar/" target="_blank" rel="noopener noreferrer">
+            <img src="assets/sponsors/municipalidad-blanco.png" alt="Municipalidad de Salta"
+                 loading="lazy" decoding="async" width="3438" height="1104">
+            <span class="sponsor-tile-name">Municipalidad de Salta</span>
+          </a>
+          <a class="sponsor-tile" href="https://www.endeavor.org.ar/" target="_blank" rel="noopener noreferrer">
+            <img src="assets/sponsors/endeavor-blanco.png" alt="Endeavor Argentina"
+                 loading="lazy" decoding="async" width="1201" height="157">
+            <span class="sponsor-tile-name">Endeavor Argentina</span>
+          </a>
+          <a class="sponsor-tile" href="https://nexa.builders/" target="_blank" rel="noopener noreferrer">
+            <img src="assets/sponsors/nexa-logo.png" alt="Nexa"
+                 loading="lazy" decoding="async" width="604" height="180">
+            <span class="sponsor-tile-name">Nexa</span>
+          </a>
+          <a class="sponsor-tile" href="https://economiasalta.gob.ar/conosalta/" target="_blank" rel="noopener noreferrer">
+            <img src="assets/sponsors/economia-logo.png" alt="Gobierno de la Provincia de Salta — Ministerio de Economía y Servicios Públicos"
+                 loading="lazy" decoding="async" width="1702" height="1953">
+            <span class="sponsor-tile-name">Economía del Conocimiento · Salta</span>
+          </a>
+          <div class="sponsor-tile">
+            <span class="sponsor-acronym">FIDR</span>
+            <span class="sponsor-tile-name">Foro de Integración y Desarrollo Regional Santa Fe</span>
+          </div>
+        </div>
+
+        <div class="card sponsor-cta" data-reveal>
+          <div class="sponsor-cta-info">
+            <h3>¿Querés sumar tu marca?</h3>
+            <p>Hay espacios de patrocinio disponibles para acompañar el hackathon.</p>
+          </div>
+          <a class="btn btn-secondary" href="mailto:marketing@argentinaspace.com?subject=Sponsoreo%20%C2%B7%20Hackathon%20Argentina%20Space%202026">Contactar al equipo</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         INSCRIPCIÓN · Patrón E: cierre de conversión.
+         Estado pre-link activo hasta tener el ID del evento en Luma.
+         ============================================================ -->
+    <section class="closing" id="inscripcion" aria-labelledby="inscripcion-titulo">
+      <div class="starfield" aria-hidden="true"></div>
+      <!-- Retícula radial técnica (manual, pág. 4) centrada detrás del
+           cierre: eco de la portada, en acero de bajo contraste. -->
+      <svg class="radial-grid" aria-hidden="true" focusable="false" viewBox="0 0 800 800">
+        <g fill="none" stroke="rgb(84 97 117 / 0.24)" stroke-width="1">
+          <circle cx="400" cy="400" r="120"/>
+          <circle cx="400" cy="400" r="200"/>
+          <circle cx="400" cy="400" r="280"/>
+          <circle cx="400" cy="400" r="360" stroke="rgb(84 97 117 / 0.16)"/>
+          <line x1="400" y1="20" x2="400" y2="780" stroke="rgb(84 97 117 / 0.18)"/>
+          <line x1="20" y1="400" x2="780" y2="400" stroke="rgb(84 97 117 / 0.18)"/>
+        </g>
+      </svg>
+      <div class="container-page closing-inner" data-reveal="stagger">
+        <span class="badge badge-orange">Inscripciones próximamente</span>
+        <h2 id="inscripcion-titulo">Inscripción al hackathon</h2>
+        <p class="closing-copy">La inscripción se realizará a través de Luma y se anunciará en este sitio y en los canales oficiales de Argentina Space.</p>
+        <a class="btn btn-primary" href="mailto:marketing@argentinaspace.com?subject=Aviso%20de%20apertura%20%C2%B7%20Hackathon%20Argentina%20Space%202026">Quiero recibir el aviso</a>
+        <p class="form-hint">Al enviar el correo, el equipo del evento responde por esa misma vía cuando abren las inscripciones.</p>
+        <!-- TODO(luma): al tener el ID del evento, reemplazar el bloque
+             badge + enlace mailto + nota por el snippet oficial:
+        <button class="btn btn-primary" type="button"
+          data-luma-action="checkout" data-luma-event-id="LUMA_EVENT_ID">Inscribite al hackathon</button>
+        y activar el script #luma-checkout al final del documento. -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-white-08">
+    <div class="container-page py-fluid-lg grid gap-fluid-md md:grid-cols-3">
+      <div class="min-w-0">
+        <img src="assets/logo/logo_horizontal_positivo.png"
+             alt="Argentina Space: logotipo horizontal" width="1297" height="363"
+             class="h-9 w-auto mb-4" loading="lazy" decoding="async">
+        <p class="text-white-60 text-sm max-w-[52ch]">Hackathon Argentina Space 2026 · 11 y 12 de noviembre · Centro de Convenciones de Salta.</p>
+      </div>
+      <nav class="min-w-0" aria-label="Secciones del sitio (pie de página)">
+        <p class="font-display text-sm text-white mb-3">Secciones</p>
+        <ul class="grid gap-x-4 grid-cols-2 max-w-xs">
+          <li><a class="inline-flex items-center min-h-11 text-sm text-white-75 hover:text-white" href="#objetivo">El evento</a></li>
+          <li><a class="inline-flex items-center min-h-11 text-sm text-white-75 hover:text-white" href="#tracks">Tracks</a></li>
+          <li><a class="inline-flex items-center min-h-11 text-sm text-white-75 hover:text-white" href="#agenda">Agenda</a></li>
+          <li><a class="inline-flex items-center min-h-11 text-sm text-white-75 hover:text-white" href="#premios">Premios</a></li>
+          <li><a class="inline-flex items-center min-h-11 text-sm text-white-75 hover:text-white" href="#organizadores">Organizadores</a></li>
+          <li><a class="inline-flex items-center min-h-11 text-sm text-white-75 hover:text-white" href="#recursos">Recursos</a></li>
+          <li><a class="inline-flex items-center min-h-11 text-sm text-white-75 hover:text-white" href="#faq">FAQ</a></li>
+          <li><a class="inline-flex items-center min-h-11 text-sm text-white-75 hover:text-white" href="#sponsors">Sponsors</a></li>
+          <li><a class="inline-flex items-center min-h-11 text-sm text-white-75 hover:text-white" href="#inscripcion">Inscripción</a></li>
+        </ul>
+      </nav>
+      <div class="min-w-0">
+        <p class="font-display text-sm text-white mb-3">Contacto</p>
+        <a class="inline-flex items-center min-h-11 text-sm text-ion-cyan underline underline-offset-4 break-all" href="mailto:marketing@argentinaspace.com">marketing@argentinaspace.com</a>
+        <p class="text-white-60 text-sm mt-2 max-w-[52ch]">Consultas generales, prensa y patrocinio del evento.</p>
+        <ul class="flex gap-4 mt-3">
+          <li>
+            <a class="inline-flex items-center justify-center w-11 h-11 text-white-75 hover:text-ion-cyan"
+               href="https://www.instagram.com/argentinaspace" target="_blank" rel="noopener noreferrer" aria-label="Argentina Space en Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.2" cy="6.8" r="1"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a class="inline-flex items-center justify-center w-11 h-11 text-white-75 hover:text-ion-cyan"
+               href="https://www.linkedin.com/company/argentina-space/" target="_blank" rel="noopener noreferrer" aria-label="Argentina Space en LinkedIn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="3"/>
+                <line x1="7.5" y1="10.5" x2="7.5" y2="17"/>
+                <circle cx="7.5" cy="7" r="0.9" fill="currentColor" stroke="none"/>
+                <path d="M11.5 17v-4a2.2 2.2 0 0 1 4.4 0v4"/>
+                <line x1="11.5" y1="10.5" x2="11.5" y2="17"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <p class="sr-only" role="status" aria-live="polite" id="copy-status"></p>
+
+  <!-- TODO(luma): activar junto con los tres CTAs de checkout.
+       El script se incluye una sola vez aunque haya varios botones.
+  <script id="luma-checkout" src="https://embed.lu.ma/checkout-button.js"></script> -->
+
+  <!-- Librerías de movimiento vendorizadas (sin CDN): GSAP 3.15.0 +
+       ScrollTrigger + Lenis 1.3.25 ≈ 136 KB minificados en total.
+       Cómo actualizarlas: ver brandbook/README.md. -->
+  <script defer src="assets/vendor/gsap.min.js"></script>
+  <script defer src="assets/vendor/ScrollTrigger.min.js"></script>
+  <script defer src="assets/vendor/lenis.min.js"></script>
+
+  <script>
+    /* ============================================================
+       Sistema de movimiento (GSAP + ScrollTrigger + Lenis)
+       Garantías: el CSS no declara estados ocultos; los estados
+       iniciales los fija GSAP recién al ejecutarse. Sin JS, sin
+       librerías o con prefers-reduced-motion todo el contenido es
+       visible y el scroll es nativo (Lenis ni siquiera se inicializa).
+       Se espera a DOMContentLoaded porque los scripts vendorizados
+       (defer) ejecutan antes de ese evento.
+       ============================================================ */
+    document.addEventListener('DOMContentLoaded', function () {
+
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var lenis = null;
+      var motionActive = false;
+
+      /* ---------- Menú de navegación (disclosure) ----------
+         Reemplaza la fila de chips por un botón + panel de columna
+         completa por debajo de 1100px (ver media queries del bloque
+         <style>). La clase .has-navbar-menu solo se agrega acá, una
+         vez que el toggle quedó cableado: sin este script los chips
+         siguen siendo la navegación única, en cualquier ancho. */
+      (function () {
+        var toggle = document.getElementById('navbar-toggle');
+        var panel = document.getElementById('navbar-panel');
+        if (!toggle || !panel) { return; }
+        document.documentElement.classList.add('has-navbar-menu');
+
+        var isOpen = false;
+        var focusablesSelector = 'a[href], button:not([disabled])';
+
+        function lockScroll() {
+          document.body.style.overflow = 'hidden';
+          if (lenis) { lenis.stop(); }
+        }
+        function unlockScroll() {
+          document.body.style.overflow = '';
+          if (lenis) { lenis.start(); }
+        }
+
+        function openPanel() {
+          isOpen = true;
+          panel.hidden = false;
+          toggle.setAttribute('aria-expanded', 'true');
+          toggle.setAttribute('aria-label', 'Cerrar menú');
+          lockScroll();
+          var first = panel.querySelector(focusablesSelector);
+          if (first) { first.focus(); }
+          document.addEventListener('keydown', onKeydown);
+          document.addEventListener('click', onDocumentClick, true);
+        }
+
+        function closePanel(options) {
+          if (!isOpen) { return; }
+          isOpen = false;
+          panel.hidden = true;
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.setAttribute('aria-label', 'Abrir menú');
+          unlockScroll();
+          document.removeEventListener('keydown', onKeydown);
+          document.removeEventListener('click', onDocumentClick, true);
+          if (!options || options.returnFocus !== false) {
+            toggle.focus();
+          }
+        }
+
+        function onKeydown(event) {
+          if (event.key === 'Escape') {
+            event.preventDefault();
+            closePanel();
+            return;
+          }
+          /* Trampa de foco simple: si Tab saca el foco del panel o
+             del botón, lo devuelve al extremo correspondiente. */
+          if (event.key !== 'Tab') { return; }
+          var focusables = Array.prototype.slice.call(panel.querySelectorAll(focusablesSelector));
+          if (!focusables.length) { return; }
+          var firstEl = focusables[0];
+          var lastEl = focusables[focusables.length - 1];
+          if (event.shiftKey && document.activeElement === firstEl) {
+            event.preventDefault();
+            lastEl.focus();
+          } else if (!event.shiftKey && document.activeElement === lastEl) {
+            event.preventDefault();
+            firstEl.focus();
+          }
+        }
+
+        function onDocumentClick(event) {
+          if (panel.contains(event.target) || toggle.contains(event.target)) { return; }
+          closePanel({ returnFocus: false });
+        }
+
+        toggle.addEventListener('click', function () {
+          if (isOpen) { closePanel(); } else { openPanel(); }
+        });
+
+        /* Los enlaces del panel usan el mismo manejador delegado de
+           anclas más abajo (navegación por anclas); acá solo se
+           cierra el panel una vez que el click ya disparó ese scroll. */
+        panel.addEventListener('click', function (event) {
+          if (event.target.closest('a[href^="#"]')) {
+            closePanel({ returnFocus: false });
+          }
+        });
+
+        /* Si el viewport cruza a ≥1100px con el panel abierto (por
+           ejemplo, al girar un dispositivo o redimensionar), se
+           cierra para no dejar scroll bloqueado detrás de una fila
+           de chips que ya volvió a estar visible. */
+        var wideQuery = window.matchMedia('(min-width: 1100px)');
+        function onWideChange(event) {
+          if (event.matches) { closePanel({ returnFocus: false }); }
+        }
+        if (wideQuery.addEventListener) {
+          wideQuery.addEventListener('change', onWideChange);
+        } else if (wideQuery.addListener) {
+          wideQuery.addListener(onWideChange);
+        }
+      })();
+
+      /* ---------- Registro de revelados y foco de teclado ----------
+         Los revelados animan opacity (nunca visibility): el contenido
+         permanece en el árbol de accesibilidad y en el orden de
+         tabulación aunque todavía no se haya revelado. Si el foco entra
+         en un bloque pendiente, su animación salta al estado final para
+         que el foco nunca quede sobre un control invisible. */
+      var revealAnimations = [];
+      function registerReveal(root, anim) {
+        revealAnimations.push({ root: root, anim: anim });
+      }
+      document.addEventListener('focusin', function (event) {
+        revealAnimations.forEach(function (entry) {
+          if (entry.anim.progress() < 1 && entry.root.contains(event.target)) {
+            entry.anim.progress(1);
+          }
+        });
+      });
+
+      /* ---------- Video de portada ----------
+         El markup no lleva autoplay: la reproducción la inicia este
+         código solo sin preferencia de movimiento reducido (queda el
+         poster en caso contrario, también sin JS). Al salir del
+         viewport se pausa para no gastar ciclos ni batería. El botón
+         de pausa (WCAG 2.2.2) se muestra recién cuando el video tiene
+         datos reproducibles; con movimiento reducido arranca pausado
+         y la persona puede reproducirlo de forma explícita. */
+      (function () {
+        var hero = document.querySelector('.hero');
+        var video = document.querySelector('.hero-video');
+        var toggle = document.querySelector('.hero-video-toggle');
+        if (!hero || !video) { return; }
+        var heroVisible = true;
+        var userPaused = reduceMotion.matches;
+        function syncVideo() {
+          if (userPaused || !heroVisible) {
+            video.pause();
+          } else {
+            var playing = video.play();
+            if (playing && playing.catch) { playing.catch(function () {}); }
+          }
+          if (toggle) {
+            toggle.setAttribute('aria-pressed', userPaused ? 'true' : 'false');
+          }
+        }
+        if (toggle) {
+          var showToggle = function () { toggle.hidden = false; };
+          if (video.readyState >= 2) { showToggle(); }
+          video.addEventListener('loadeddata', showToggle);
+          toggle.addEventListener('click', function () {
+            userPaused = !userPaused;
+            syncVideo();
+          });
+        }
+        if ('IntersectionObserver' in window) {
+          new IntersectionObserver(function (entries) {
+            heroVisible = entries[0].isIntersecting;
+            syncVideo();
+          }, { threshold: 0.05 }).observe(hero);
+        }
+        reduceMotion.addEventListener('change', function () {
+          userPaused = reduceMotion.matches;
+          syncVideo();
+        });
+        syncVideo();
+      })();
+
+      /* ---------- Navegación por anclas ----------
+         Con Lenis activo el desplazamiento pasa por lenis.scrollTo;
+         el offset de la barra fija lo aporta scroll-margin-top
+         (nav-h + 16px, definido en el design system), que Lenis lee
+         del propio elemento destino — no se duplica a mano. Sin Lenis
+         el scroll nativo respeta el mismo scroll-margin-top. En ambos
+         casos el foco de teclado se mueve a la sección destino, para
+         que el skip link y la navegación sigan siendo accesibles. */
+      document.addEventListener('click', function (event) {
+        var link = event.target.closest('a[href^="#"]');
+        if (!link) { return; }
+        var id = link.getAttribute('href').slice(1);
+        var target = id && document.getElementById(id);
+        if (!target) { return; }
+        event.preventDefault();
+        if (lenis) {
+          lenis.scrollTo(target);
+        } else {
+          target.scrollIntoView();
+        }
+        if (window.history && history.pushState) {
+          history.pushState(null, '', '#' + id);
+        }
+        if (!target.hasAttribute('tabindex')) { target.setAttribute('tabindex', '-1'); }
+        target.focus({ preventScroll: true });
+      });
+
+      /* ---------- Acordeón FAQ ----------
+         <details> nativo siempre: sin JS o con movimiento reducido el
+         navegador abre y cierra al instante. Con movimiento pleno,
+         GSAP anima la altura del cuerpo. */
+      document.querySelectorAll('.faq-item').forEach(function (item) {
+        var summary = item.querySelector('.faq-summary');
+        var body = item.querySelector('.faq-body');
+        if (!summary || !body) { return; }
+        summary.addEventListener('click', function (event) {
+          if (!motionActive || !window.gsap) { return; }
+          event.preventDefault();
+          gsap.killTweensOf(body);
+          /* Curva idéntica al token --ease-out-quart del design system
+             (cubic-bezier(0.25, 1, 0.5, 1)): el acordeón es UI de producto,
+             no un momento de marca — comparte la misma sensación que
+             botones/chips en lugar del power2.out propio de GSAP. Duración
+             bajo el techo de 300ms para UI (revisión de animaciones);
+             el cierre es una respuesta del sistema y va más rápido que la
+             apertura, que muestra contenido nuevo. */
+          if (item.open) {
+            gsap.to(body, {
+              height: 0, duration: 0.22, ease: 'cubic-bezier(0.25, 1, 0.5, 1)',
+              onComplete: function () {
+                item.open = false;
+                gsap.set(body, { clearProps: 'height' });
+                /* La altura del documento cambió: recalcula los puntos
+                   de disparo de las secciones siguientes (sponsors,
+                   inscripción) para que no se revelen fuera de pantalla. */
+                ScrollTrigger.refresh();
+              }
+            });
+          } else {
+            item.open = true;
+            gsap.fromTo(body, { height: 0 }, {
+              height: 'auto', duration: 0.24, ease: 'cubic-bezier(0.25, 1, 0.5, 1)',
+              onComplete: function () {
+                gsap.set(body, { clearProps: 'height' });
+                ScrollTrigger.refresh();
+              }
+            });
+          }
+        });
+      });
+
+      /* ---------- Coreografía de scroll ---------- */
+      if (!(window.gsap && window.ScrollTrigger)) { return; }
+      gsap.registerPlugin(ScrollTrigger);
+
+      var mm = gsap.matchMedia();
+      mm.add({
+        noPref: '(prefers-reduced-motion: no-preference)',
+        wide: '(min-width: 768px)'
+      }, function (context) {
+        /* Con movimiento reducido no se crea ningún tween ni trigger.
+           gsap.matchMedia escucha los cambios del sistema y revierte
+           todo (estados incluidos) si la preferencia cambia en vivo. */
+        if (!context.conditions.noPref) { return; }
+        motionActive = true;
+
+        /* Lenis: scroll inercial integrado al ticker de GSAP */
+        var tick = null;
+        if (window.Lenis) {
+          lenis = new Lenis({ autoRaf: false });
+          lenis.on('scroll', ScrollTrigger.update);
+          tick = function (time) { lenis.raf(time * 1000); };
+          gsap.ticker.add(tick);
+          gsap.ticker.lagSmoothing(0);
+          /* Red de seguridad para enlaces profundos (#seccion): si el
+             salto nativo al fragmento quedó interrumpido por el arranque
+             del sistema de movimiento, reposiciona sobre el destino.
+             Solo actúa cuando el destino quedó fuera del viewport; el
+             offset de la barra fija sale del scroll-margin-top que
+             Lenis lee del propio elemento. */
+          if (location.hash) {
+            var deepTarget = document.getElementById(location.hash.slice(1));
+            if (deepTarget) {
+              requestAnimationFrame(function () {
+                if (!lenis) { return; }
+                var rect = deepTarget.getBoundingClientRect();
+                if (rect.top > window.innerHeight || rect.bottom < 0) {
+                  lenis.scrollTo(deepTarget, { immediate: true });
+                }
+              });
+            }
+          }
+        }
+
+        /* Encabezados de sección: número, título y bajada en cascada.
+           Todos los revelados de contenido animan opacity — no autoAlpha,
+           que agrega visibility:hidden y saca el contenido del árbol de
+           accesibilidad y del orden de tabulación. autoAlpha queda solo
+           para piezas decorativas con aria-hidden (puntos orbitales). */
+        document.querySelectorAll('.section-head').forEach(function (head) {
+          registerReveal(head, gsap.from(head.children, {
+            opacity: 0, y: 32, duration: 0.7, ease: 'power2.out', stagger: 0.12,
+            scrollTrigger: { trigger: head, start: 'top 80%' }
+          }));
+        });
+
+        /* Entradas por bloque, ajustadas a lo que revelan */
+        document.querySelectorAll('[data-reveal]').forEach(function (el) {
+          var kind = el.getAttribute('data-reveal');
+          if (kind === 'stagger') {
+            /* Grillas (sponsors, organizadores, FAQ, cierre): cascada */
+            registerReveal(el, gsap.from(el.children, {
+              opacity: 0, y: 30, duration: 0.7, ease: 'power2.out', stagger: 0.12,
+              scrollTrigger: { trigger: el, start: 'top 80%' }
+            }));
+          } else if (kind === 'mask') {
+            /* Marcos de sector: el cuadro sube y la estrella nítida
+               se abre en escala sobre la base (patrón B del manual) */
+            var bright = el.querySelector('.sector-frame-bright');
+            var tl = gsap.timeline({
+              scrollTrigger: { trigger: el, start: 'top 80%' }
+            });
+            tl.from(el, { opacity: 0, y: 30, duration: 0.7, ease: 'power2.out' });
+            if (bright) {
+              tl.from(bright, { opacity: 0, scale: 0.55, duration: 0.9, ease: 'expo.out' }, 0.2);
+            }
+            registerReveal(el, tl);
+          } else {
+            /* Bloques simples: fundido ascendente.
+               .sponsor-cta vive pegada debajo de .sponsor-grid (cascada
+               de 8 tiles, stagger 0.12s × duration 0.7s ≈ 1.54s hasta que
+               el último tile termina). Su propio ScrollTrigger dispara
+               casi al mismo tiempo que el del grid por la poca distancia
+               entre ambos, así que sin demora esta tarjeta podía llegar
+               a su reposo (y:0) mientras el último tile del grid todavía
+               seguía en camino (y aún > 0), solapándose brevemente con
+               él. El delay iguala el peor caso del grid para que nunca
+               arranque antes de que la cascada de arriba haya terminado. */
+            var isSponsorCta = el.classList.contains('sponsor-cta');
+            registerReveal(el, gsap.from(el, {
+              opacity: 0, y: 34, duration: 0.8, ease: 'power2.out',
+              delay: isSponsorCta ? 1.6 : 0,
+              scrollTrigger: { trigger: el, start: 'top 80%' }
+            }));
+          }
+        });
+
+        /* Agenda: el riel se dibuja con el scroll y cada punto del
+           sistema orbital aparece cuando el frente del trazo lo pasa */
+        document.querySelectorAll('.timeline-day').forEach(function (day) {
+          var head = day.querySelector('.timeline-day-head');
+          if (head) {
+            registerReveal(head, gsap.from(head, {
+              opacity: 0, y: 28, duration: 0.7, ease: 'power2.out',
+              scrollTrigger: { trigger: day, start: 'top 82%' }
+            }));
+          }
+          /* El trazo mide exactamente 1000 unidades de usuario (línea
+             recta en un viewBox de alto 1000). Se trabaja en ese rango
+             porque GSAP redondea stroke-dashoffset al entero: con 1000
+             pasos el dibujo se ve continuo. */
+          var path = day.querySelector('.timeline-rail-path');
+          if (path) {
+            gsap.fromTo(path,
+              { strokeDasharray: '1000 1000', strokeDashoffset: 1000 },
+              {
+                strokeDashoffset: 0, ease: 'none',
+                scrollTrigger: {
+                  trigger: day.querySelector('.timeline-track'),
+                  start: 'top 78%', end: 'bottom 58%', scrub: 0.6
+                }
+              });
+          }
+          day.querySelectorAll('.timeline-item').forEach(function (item) {
+            var tl = gsap.timeline({
+              scrollTrigger: { trigger: item, start: 'top 82%' }
+            });
+            var dot = item.querySelector('.orbit-dot');
+            if (dot) {
+              tl.from(dot, {
+                autoAlpha: 0, scale: 0.6, transformOrigin: '50% 50%',
+                duration: 0.45, ease: 'power2.out'
+              });
+            }
+            tl.from([item.querySelector('h4'), item.querySelector('p')], {
+              opacity: 0, y: 14, duration: 0.5, ease: 'power2.out', stagger: 0.08
+            }, 0.05);
+            registerReveal(item, tl);
+          });
+        });
+
+        /* Parallax de portada: zoom-out sutil del video/poster,
+           solo en pantallas ≥768px (el móvil queda simple) */
+        if (context.conditions.wide) {
+          var media = document.querySelector('.hero-media');
+          if (media) {
+            gsap.fromTo(media, { scale: 1.12 }, {
+              scale: 1, ease: 'none',
+              scrollTrigger: {
+                trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true
+              }
+            });
+          }
+        }
+
+        return function () {
+          motionActive = false;
+          revealAnimations.length = 0;
+          if (tick) { gsap.ticker.remove(tick); }
+          if (lenis) {
+            gsap.ticker.lagSmoothing(500, 33);
+            lenis.destroy();
+            lenis = null;
+          }
+        };
+      });
+    });
+
+    /* ---------- Resaltado de sección activa en la navegación ---------- */
+    (function () {
+      var links = Array.prototype.slice.call(document.querySelectorAll('.navbar-link'));
+      var map = {};
+      links.forEach(function (link) {
+        var id = link.getAttribute('href').slice(1);
+        var section = document.getElementById(id);
+        if (section) { map[id] = link; }
+      });
+      if (!('IntersectionObserver' in window)) { return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            links.forEach(function (l) { l.classList.remove('is-active'); });
+            var link = map[entry.target.id];
+            if (link) {
+              link.classList.add('is-active');
+              link.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+            }
+          }
+        });
+      }, { rootMargin: '-40% 0px -55% 0px' });
+      Object.keys(map).forEach(function (id) {
+        io.observe(document.getElementById(id));
+      });
+    })();
+
+    /* ---------- Copiar al portapapeles ---------- */
+    (function () {
+      var status = document.getElementById('copy-status');
+      document.querySelectorAll('[data-copy], [data-copy-text]').forEach(function (btn) {
+        var original = btn.textContent;
+        btn.addEventListener('click', function () {
+          var text = btn.getAttribute('data-copy-text');
+          if (!text) {
+            var panel = btn.closest('.code-panel');
+            var code = panel && panel.querySelector('code');
+            text = code ? code.textContent : '';
+          }
+          if (!text) { return; }
+          if (!navigator.clipboard) {
+            /* Contextos no seguros (por ejemplo, http por IP de LAN):
+               la API no existe y se informa por el mismo canal de estado. */
+            status.textContent = 'No se pudo copiar. Seleccione el texto manualmente.';
+            return;
+          }
+          navigator.clipboard.writeText(text).then(function () {
+            btn.classList.add('is-copied');
+            btn.textContent = 'Copiado';
+            status.textContent = 'Valor copiado al portapapeles';
+            window.setTimeout(function () {
+              btn.classList.remove('is-copied');
+              btn.textContent = original;
+              status.textContent = '';
+            }, 1600);
+          }).catch(function () {
+            status.textContent = 'No se pudo copiar. Seleccione el texto manualmente.';
+          });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
