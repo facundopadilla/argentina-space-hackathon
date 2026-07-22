@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Reglamento del Hackathon Argentina Space 2026: reglas de participación y de trabajo durante las dos jornadas del evento.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#000D21">
+  <title>Reglamento · Hackathon Argentina Space 2026</title>
+
+  <link rel="icon" href="assets/logo/isotipo_estrella_naranja.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Montserrat:wght@400;500;600;700&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/site.css">
+
+  <style>
+    /* Estilos propios de las páginas de documento. Todo lo
+       reutilizable vive en design-system/tokens.css. */
+    .navbar-brand {
+      flex: none;
+    }
+    .doc {
+      padding-block: var(--spacing-fluid-xl);
+    }
+    .doc-body {
+      max-width: 72ch;
+    }
+    .doc-body h2 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: var(--text-display-md);
+      line-height: var(--text-display-md--line-height);
+      color: var(--color-white);
+      margin-top: var(--spacing-fluid-lg);
+      margin-bottom: 12px;
+    }
+    .doc-body p,
+    .doc-body li {
+      color: var(--color-white-75);
+      font-size: 0.98rem;
+    }
+    .doc-body p + p {
+      margin-top: 0.9em;
+    }
+    .doc-body ul {
+      list-style: disc;
+    }
+    .doc-body ol {
+      list-style: decimal;
+    }
+    .doc-body ul,
+    .doc-body ol {
+      margin: 14px 0 0;
+      padding-left: 1.2em;
+      display: grid;
+      gap: 8px;
+    }
+    .doc-body li::marker {
+      color: var(--color-ion-cyan);
+    }
+    .doc-note {
+      margin-top: var(--spacing-fluid-lg);
+      font-size: 0.85rem;
+      color: var(--color-white-60);
+    }
+    .doc-body a,
+    .doc-footer a {
+      color: var(--color-ion-cyan);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+    .doc-footer {
+      border-top: 1px solid var(--color-white-08);
+      padding-block: var(--spacing-fluid-md);
+    }
+    .doc-footer p {
+      font-size: 0.85rem;
+      color: var(--color-white-60);
+    }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#contenido">Ir al contenido</a>
+
+  <nav class="navbar" aria-label="Navegación del documento">
+    <div class="navbar-inner">
+      <a class="navbar-brand" href="index.html" aria-label="Argentina Space — volver al sitio del hackathon">
+        <img src="assets/logo/logo_horizontal_positivo.png" alt="" width="1297" height="363" aria-hidden="true">
+      </a>
+      <a class="btn btn-ghost" href="index.html#recursos">Volver al sitio</a>
+    </div>
+  </nav>
+
+  <main id="contenido" class="container-page doc">
+    <header class="section-head">
+      <h1 class="section-title">Reglamento</h1>
+      <p class="section-lede">Hackathon Argentina Space 2026 · 11 y 12 de noviembre · Centro de Convenciones de Salta.</p>
+    </header>
+
+    <div class="doc-body">
+      <h2>1 · Organización y generalidades</h2>
+      <p>El Hackathon Argentina Space 2026 es organizado por <strong>Argentina Space</strong> junto a instituciones del ecosistema tecnológico y productivo, y se realiza el miércoles 11 y el jueves 12 de noviembre de 2026 en el Centro de Convenciones de Salta.</p>
+      <p>Este reglamento define las reglas de trabajo durante las dos jornadas. Los requisitos de participación, el cronograma detallado y los criterios de evaluación definitivos se establecen en las bases y condiciones, que prevalecen sobre este documento en caso de diferencia.</p>
+      <!-- SLOT(reglamento): confirmar la razón social u organización jurídica
+           exacta detrás de "Argentina Space" cuando esté definida, siguiendo
+           el mismo criterio que las bases del Mono Juan (organizador +
+           entidad legal). -->
+
+      <h2>2 · Participantes y requisitos</h2>
+      <ul>
+        <li>El evento convoca a desarrolladores, diseñadores, estudiantes y perfiles de negocio interesados en la economía espacial.</li>
+        <li>Pueden participar personas mayores de edad. <!-- SLOT(reglamento): si se admite participación de menores, definir aquí el mecanismo de autorización (por ejemplo, conformidad expresa de madre, padre o tutor/a legal, siguiendo el criterio de las bases del Mono Juan) --></li>
+        <li>La participación implica la aceptación de este reglamento, del código de conducta y de las bases y condiciones.</li>
+      </ul>
+
+      <h2>3 · Inscripción</h2>
+      <ul>
+        <li>La inscripción se realiza a través de Luma, de forma <!-- SLOT(reglamento): confirmar si la inscripción es gratuita o tiene costo -->gratuita <span class="doc-note" style="margin:0;display:inline">(a confirmar)</span>, y se anuncia en este sitio y en los canales oficiales de Argentina Space.</li>
+        <li>La inscripción todavía no está abierta; el detalle del proceso (cupos, fecha límite y confirmación) se publica junto con las bases y condiciones.</li>
+      </ul>
+
+      <h2>4 · Equipos</h2>
+      <ul>
+        <li>Se puede llegar con un equipo conformado o sumarse al espacio de formación de equipos de la primera jornada.</li>
+        <li>El tamaño mínimo y máximo de los equipos se define en las bases y condiciones. <!-- SLOT(reglamento): completar el rango de integrantes por equipo cuando esté definido --></li>
+        <li>Cada equipo elige un único track y trabaja sobre él durante todo el evento.</li>
+      </ul>
+
+      <h2>5 · Tracks</h2>
+      <p>El evento tiene tres tracks alineados a los sectores del programa: Minería, Agronomía y New Space. Los desafíos definitivos de cada track se presentan en la apertura.</p>
+
+      <h2>6 · Desarrollo y originalidad del trabajo</h2>
+      <ul>
+        <li>El desarrollo del proyecto se realiza durante las jornadas del evento. Se pueden usar herramientas, librerías y servicios públicos preexistentes, pero la solución presentada debe ser trabajo original del equipo, producido durante el hackathon.</li>
+        <li>Los datasets, APIs y guías oficiales del evento se publican en la sección de recursos antes del inicio.</li>
+        <li>Cada participante lleva su computadora y lo que su equipo necesite para trabajar. El detalle de materiales y servicios disponibles en el Centro de Convenciones se publica junto con las bases y condiciones.</li>
+      </ul>
+
+      <h2>7 · Entrega, jurado y criterios de evaluación</h2>
+      <ul>
+        <li>Los proyectos se entregan al cierre del desarrollo de la segunda jornada, según la guía de entrega publicada en recursos.</li>
+        <li>Cada equipo presenta su proyecto en un pitch ante el jurado.</li>
+        <li>La composición del jurado y los criterios de evaluación definitivos, con su ponderación, se publican en las bases y condiciones. <!-- SLOT(reglamento): completar integrantes del jurado y criterios de evaluación cuando estén confirmados --></li>
+        <li>Las decisiones del jurado son definitivas.</li>
+      </ul>
+
+      <h2>8 · Premios</h2>
+      <p>Los premios se anuncian junto con la apertura de inscripciones; ninguna cifra ni beneficio es oficial hasta su publicación en este sitio y en los canales oficiales de Argentina Space.</p>
+
+      <h2>9 · Propiedad intelectual</h2>
+      <p>Los proyectos pertenecen a los equipos que los desarrollan, salvo indicación en contrario en las bases y condiciones. Al participar, los equipos autorizan a la organización a difundir el nombre, la descripción y las imágenes de sus proyectos en la comunicación del evento.</p>
+
+      <h2>10 · Convivencia</h2>
+      <p>El <a href="codigo-de-conducta.html">código de conducta</a> rige durante todo el evento y sus canales. Su incumplimiento puede implicar desde una advertencia hasta la expulsión del evento y la exclusión de la evaluación.</p>
+
+      <h2>11 · Tratamiento de datos personales</h2>
+      <p>Los datos que se recaben a través del formulario de inscripción en Luma se tratan en cumplimiento de la <strong>Ley N.º 25.326 de Protección de Datos Personales</strong> de la República Argentina, con el único propósito de gestionar la inscripción, la organización de equipos y la comunicación oficial del evento.</p>
+      <p>De acuerdo con esa ley, cada participante tiene derecho a acceder, rectificar, actualizar o solicitar la supresión de sus datos personales (derechos ARCO). Para ejercer cualquiera de estos derechos, se puede enviar una solicitud por escrito a <a href="mailto:marketing@argentinaspace.com">marketing@argentinaspace.com</a>.</p>
+      <p>La Dirección Nacional de Protección de Datos Personales tiene la atribución de atender las denuncias y reclamos que se interpongan con relación al incumplimiento de las normas sobre protección de datos.</p>
+      <!-- SLOT(reglamento): si se define una política de privacidad extendida
+           (responsable del tratamiento, plazo de conservación, uso de
+           plataformas de terceros), agregarla como anexo siguiendo el
+           formato de la política de privacidad de las bases del Mono Juan
+           (index.html, sección 07, Anexo). -->
+
+      <h2>12 · Aceptación de las bases</h2>
+      <p>La inscripción y la participación en el hackathon presuponen el conocimiento y la aceptación de este reglamento, del código de conducta y de las bases y condiciones. Ante cualquier situación no prevista, decide la organización.</p>
+
+      <h2>13 · Disposiciones finales y contacto</h2>
+      <p>La organización puede ajustar la agenda, los espacios de trabajo o este reglamento por razones organizativas, comunicando los cambios por los canales oficiales. Para cualquier consulta sobre este reglamento, escribir a <a href="mailto:marketing@argentinaspace.com">marketing@argentinaspace.com</a>.</p>
+
+      <p class="doc-note">Documento interino. Los puntos marcados como pendientes (SLOT) se completan junto con la publicación de las bases y condiciones; la versión vigente es siempre la publicada en este sitio.</p>
+    </div>
+  </main>
+
+  <footer class="doc-footer">
+    <div class="container-page">
+      <p>Hackathon Argentina Space 2026 · Consultas: <a href="mailto:marketing@argentinaspace.com">marketing@argentinaspace.com</a></p>
+      <!-- SLOT(reglamento): atribución editable — reemplazar por la fecha de
+           última revisión y la versión del documento cuando se publiquen las
+           bases y condiciones definitivas. -->
+      <p class="mt-1">Última revisión: borrador interino, sujeto a la publicación de las bases y condiciones.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
