@@ -1,0 +1,928 @@
+/* ============================================================
+   ARGENTINA SPACE — DESIGN SYSTEM (Tailwind CSS v4)
+   Fuente normativa: DESIGN.md ("Identidad Visual y Concepto
+   de Diseño 2026"). Los valores HEX son exactos al manual;
+   no se reinterpretan ni se convierten a otros espacios de color.
+
+   Compilar: npm run build:css
+   Consumir en el sitio del hackathon: importar este archivo
+   y agregar las rutas propias con @source (ver brandbook/README.md).
+   ============================================================ */
+
+@import "tailwindcss" source(none);
+
+/* Fuentes de detección de clases: el brandbook. El sitio del
+   hackathon debe sumar sus propias rutas con @source. */
+@source "../brandbook/index.html";
+
+/* ============================================================
+   1 · TOKENS DE MARCA (@theme)
+   ============================================================ */
+@theme {
+  /* --- Paleta oficial — se elimina la paleta por defecto de
+         Tailwind para impedir colores fuera de marca --- */
+  --color-*: initial;
+
+  --color-white: #ffffff;
+
+  /* Negro Profundo · Espacio — fondo base, modo oscuro */
+  --color-space-black: #000D21;
+  /* Azul Oscuro · Horizonte Nocturno — fondos principales, paneles */
+  --color-night-navy: #002654;
+  /* Gris Azulado · Acero de Módulo — neutro de soporte.
+     Atención: como texto sobre #000D21 rinde ~3.1:1 → solo texto
+     grande (≥24px o ≥18.66px bold) o uso decorativo, nunca cuerpo. */
+  --color-module-steel: #546175;
+  /* Cian Brillante · Plasma de Iones — acentos, datos (nivel Meso), CTAs.
+     Como fondo exige texto oscuro #000D21. */
+  --color-ion-cyan: #48F6FF;
+  /* Naranja · Resplandor — color de marca / isotipo, CTAs.
+     Como fondo exige texto oscuro #000D21. */
+  --color-flare-orange: #F8B135;
+  /* Nota: el azul #1B459F del degradado del isotipo no se registra
+     como token de color para no generar utilidades fuera de paleta.
+     Vive únicamente dentro de --iso-gradient (ver más abajo). */
+
+  /* --- Escalera de texto blanco sobre fondos oscuros ---
+     90/75: cuerpo y titulares · 60: secundario (≥4.5:1)
+     45: solo texto grande o decorativo (~4.1:1)
+     12/08: bordes y superficies sutiles */
+  --color-white-90: rgb(255 255 255 / 0.90);
+  --color-white-75: rgb(255 255 255 / 0.75);
+  --color-white-60: rgb(255 255 255 / 0.60);
+  --color-white-45: rgb(255 255 255 / 0.45);
+  --color-white-12: rgb(255 255 255 / 0.12);
+  --color-white-08: rgb(255 255 255 / 0.08);
+
+  /* --- Tipografía (las tres familias del manual, sin excepciones) --- */
+  --font-*: initial;
+  --font-display: "Michroma", "Eurostile", "Orbitron", sans-serif;
+  --font-body: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --font-alt: "Space Grotesk", "Inter", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+
+  /* --- Escala tipográfica display (fluida, tope ≤ 6rem) --- */
+  --text-display-2xl: clamp(1.9rem, 1rem + 4.5vw, 4rem);
+  --text-display-2xl--line-height: 1.18;
+  --text-display-xl: clamp(1.5rem, 1rem + 2.6vw, 2.5rem);
+  --text-display-xl--line-height: 1.3;
+  --text-display-lg: clamp(1.25rem, 1rem + 1.6vw, 1.9rem);
+  --text-display-lg--line-height: 1.35;
+  --text-display-md: clamp(1.05rem, 0.95rem + 0.8vw, 1.35rem);
+  --text-display-md--line-height: 1.4;
+
+  /* --- Espaciado fluido (se suma a la escala estándar de Tailwind) --- */
+  --spacing-fluid-2xs: clamp(0.5rem, 0.4rem + 0.5vw, 0.75rem);
+  --spacing-fluid-xs: clamp(0.75rem, 0.6rem + 0.8vw, 1.25rem);
+  --spacing-fluid-sm: clamp(1rem, 0.8rem + 1.2vw, 1.75rem);
+  --spacing-fluid-md: clamp(1.5rem, 1.1rem + 2vw, 2.5rem);
+  --spacing-fluid-lg: clamp(2.5rem, 1.8rem + 3.5vw, 4.5rem);
+  --spacing-fluid-xl: clamp(4rem, 2.8rem + 6vw, 7rem);
+  --spacing-section: clamp(5.5rem, 4rem + 7.5vw, 9rem);
+  --spacing-gutter: clamp(1.25rem, 0.9rem + 2vw, 2.5rem);
+
+  /* --- Radios --- */
+  --radius-*: initial;
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 28px;
+  --radius-pill: 999px;
+
+  /* --- Curvas de easing --- */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-brand: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ============================================================
+   2 · TOKENS GLOBALES SIN NAMESPACE DE UTILIDAD
+   ============================================================ */
+@layer base {
+  :root {
+    /* Degradado oficial del isotipo: vertical, azul arriba →
+       naranja abajo. Vive solo en la FORMA de la estrella;
+       nunca se aplica a texto. */
+    --iso-gradient: linear-gradient(180deg, #1B459F 0%, #F8B135 100%);
+
+    /* Silueta del isotipo (estrella de 4 puntas) como máscara CSS */
+    --star-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 220'%3E%3Cpath d='M110 10 C110 65.2 65.2 110 10 110 C65.2 110 110 154.8 110 210 C110 154.8 154.8 110 210 110 C154.8 110 110 65.2 110 10 Z'/%3E%3C/svg%3E");
+
+    /* Escala semántica de z-index */
+    --z-dropdown: 200;
+    --z-sticky: 300;
+    --z-modal-backdrop: 400;
+    --z-modal: 500;
+    --z-toast: 600;
+    --z-tooltip: 700;
+
+    /* Layout */
+    --container-page: 1180px;
+    --nav-h: 64px;
+  }
+}
+
+/* ============================================================
+   3 · BASE
+   ============================================================ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background: var(--color-space-black);
+    color: var(--color-white-90);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.7; /* texto claro sobre oscuro pide más aire */
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-ion-cyan);
+    color: var(--color-space-black);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-ion-cyan);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  section[id], [id] {
+    scroll-margin-top: calc(var(--nav-h) + 16px);
+  }
+}
+
+/* ============================================================
+   4 · COMPONENTES
+   ============================================================ */
+@layer components {
+
+  /* ---------- Contenedor de página ---------- */
+  .container-page {
+    max-width: var(--container-page);
+    margin-inline: auto;
+    padding-inline: var(--spacing-gutter);
+  }
+
+  /* ---------- Skip link ---------- */
+  .skip-link {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: var(--z-toast);
+    padding: 12px 20px;
+    background: var(--color-flare-orange);
+    color: var(--color-space-black);
+    font-weight: 700;
+    font-size: 0.875rem;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transform: translateY(-250%);
+    transition: transform 0.2s var(--ease-brand);
+  }
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+
+  /* ---------- Botones ----------
+     Regla del manual: sobre cian y naranja el texto es oscuro
+     (#000D21); nunca blanco sobre los acentos. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 13px 28px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    border: 0;
+    transition:
+      box-shadow 0.25s var(--ease-out-quart),
+      background-color 0.25s var(--ease-out-quart),
+      color 0.25s var(--ease-out-quart),
+      border-color 0.25s var(--ease-out-quart);
+  }
+  /* transform vive en su propia transition, aplicada solo junto al
+     estado :active — así no compite con los tweens GSAP de scroll-reveal,
+     que también escriben transform inline en el mismo elemento (ver
+     nota en tokens.css sobre el conflicto CSS transition + GSAP). */
+  .btn:active {
+    transform: translateY(1px);
+    transition: transform 0.1s var(--ease-out-quart);
+  }
+
+  /* CTA principal: una por vista */
+  .btn-primary {
+    background: var(--color-flare-orange);
+    color: var(--color-space-black);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 36px -10px rgb(248 177 53 / 0.5);
+  }
+
+  /* Acción de apoyo con acento cian */
+  .btn-secondary {
+    background: var(--color-ion-cyan);
+    color: var(--color-space-black);
+  }
+  .btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 36px -12px rgb(72 246 255 / 0.45);
+  }
+
+  /* Acción terciaria sobre fondos oscuros */
+  .btn-ghost {
+    background: rgb(255 255 255 / 0.04);
+    border: 1.5px solid var(--color-white-12);
+    color: var(--color-white-90);
+    padding: 11.5px 26.5px;
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-ion-cyan);
+    color: var(--color-ion-cyan);
+    transform: translateY(-2px);
+  }
+
+  /* Botón circular con flecha — recurso de marca (manual, pág. 11) */
+  .btn-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1.5px solid var(--color-white-12);
+    background: rgb(255 255 255 / 0.04);
+    color: var(--color-white-90);
+    cursor: pointer;
+    text-decoration: none;
+    transition:
+      border-color 0.25s var(--ease-out-quart),
+      color 0.25s var(--ease-out-quart),
+      transform 0.25s var(--ease-out-quart);
+  }
+  .btn-circle:hover {
+    border-color: var(--color-flare-orange);
+    color: var(--color-flare-orange);
+    transform: translateY(-3px);
+  }
+
+  /* ---------- Barra de navegación ---------- */
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    min-height: var(--nav-h);
+    background: rgb(0 13 33 / 0.92);
+    border-bottom: 1px solid var(--color-white-08);
+  }
+  .navbar-inner {
+    max-width: var(--container-page);
+    margin-inline: auto;
+    padding-inline: var(--spacing-gutter);
+    min-height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .navbar-brand {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    color: var(--color-white-90);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .navbar-brand img {
+    height: 26px;
+    width: auto;
+  }
+  .navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: 4px 64px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    /* Contención del ghost hit-target (audit: chip parcialmente
+       clippeado por overflow-x:auto conserva su rect geométrico más
+       allá del borde visible del scrollport; getBoundingClientRect
+       de ese chip invade la zona del próximo elemento del navbar —
+       CTA o botón de menú — y esa zona muerta puede confundirse con
+       el propio chip si no queda un colchón visualmente inequívoco).
+       Colchón real de 56px tras el último chip: ningún rect de chip
+       llega ni cerca del borde del contenedor, aunque esté a mitad
+       de desplazar. El desvanecido cubre exactamente ese colchón:
+       lo que se ve difuminarse a transparente es, pixel a pixel,
+       la misma zona que ya no pertenece a ningún chip. */
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 12px,
+      #000 calc(100% - 56px),
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 12px,
+      #000 calc(100% - 56px),
+      transparent 100%
+    );
+    /* Colchón real (no solo visual) tras el último chip: garantiza
+       que su rect geométrico nunca alcance el borde del contenedor,
+       aunque esté parcialmente desplazado fuera de vista. Coincide
+       con la franja transparente del degradado de arriba. */
+    padding-inline-end: 56px;
+  }
+  .navbar-links::-webkit-scrollbar {
+    display: none;
+  }
+  .navbar-link {
+    scroll-snap-align: start;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 8px 14px;
+    border-radius: var(--radius-pill);
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: var(--color-white-75);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.25s var(--ease-brand), background-color 0.25s var(--ease-brand);
+  }
+  .navbar-link:hover {
+    color: var(--color-white);
+    background: rgb(255 255 255 / 0.06);
+  }
+  .navbar-link.is-active {
+    color: var(--color-ion-cyan);
+    background: rgb(72 246 255 / 0.08);
+  }
+
+  /* ---------- Botón de menú (hamburguesa) ----------
+     Oculto por defecto (display: none): cada página consumidora
+     decide, con su propio media query, el punto de quiebre en el
+     que la fila de chips completa deja de entrar junto a la marca
+     y el CTA — ese umbral depende del contenido de cada navbar (ver
+     hackathon/index.html) y no es una regla genérica del sistema.
+     El ícono son dos barras que se transforman en X; con movimiento
+     reducido el cambio es instantáneo (sin transición). */
+  .navbar-toggle {
+    display: none;
+    flex: none;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid var(--color-white-12);
+    border-radius: var(--radius-sm);
+    background: rgb(255 255 255 / 0.04);
+    color: var(--color-white-90);
+    cursor: pointer;
+  }
+  .navbar-toggle:hover {
+    border-color: var(--color-ion-cyan);
+    color: var(--color-ion-cyan);
+  }
+  .navbar-toggle-icon,
+  .navbar-toggle-icon::before,
+  .navbar-toggle-icon::after {
+    display: block;
+    width: 18px;
+    height: 1.5px;
+    background: currentColor;
+    border-radius: 1px;
+    transition: transform 0.25s var(--ease-brand), opacity 0.25s var(--ease-brand);
+  }
+  .navbar-toggle-icon {
+    position: relative;
+  }
+  .navbar-toggle-icon::before,
+  .navbar-toggle-icon::after {
+    content: "";
+    position: absolute;
+    left: 0;
+  }
+  .navbar-toggle-icon::before { top: -6px; }
+  .navbar-toggle-icon::after { top: 6px; }
+  .navbar-toggle[aria-expanded="true"] .navbar-toggle-icon {
+    background: transparent;
+  }
+  .navbar-toggle[aria-expanded="true"] .navbar-toggle-icon::before {
+    top: 0;
+    transform: rotate(45deg);
+  }
+  .navbar-toggle[aria-expanded="true"] .navbar-toggle-icon::after {
+    top: 0;
+    transform: rotate(-45deg);
+  }
+
+  /* ---------- Panel del menú (disclosure a pantalla completa) ----------
+     Oculto con [hidden] (no display:none inline) para que el JS solo
+     tenga que alternar un atributo; el estado sin JS nunca lo aplica.
+     El panel cubre bajo la barra fija y su fondo replica el navbar
+     para que la transición de apertura no revele contenido de la
+     página detrás. */
+  .navbar-panel {
+    position: fixed;
+    inset: var(--nav-h) 0 0 0;
+    z-index: var(--z-modal);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px var(--spacing-gutter) var(--spacing-fluid-md);
+    background: var(--color-space-black);
+    overflow-y: auto;
+  }
+  .navbar-panel[hidden] {
+    display: none;
+  }
+  .navbar-panel .navbar-link {
+    width: 100%;
+    justify-content: flex-start;
+    min-height: 52px;
+    padding-inline: 16px;
+    font-size: 0.95rem;
+    border-radius: var(--radius-sm);
+  }
+  .navbar-panel .navbar-cta {
+    margin-top: 14px;
+    width: 100%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .navbar-toggle-icon,
+    .navbar-toggle-icon::before,
+    .navbar-toggle-icon::after {
+      transition: none;
+    }
+  }
+
+  /* ---------- Tarjeta ---------- */
+  .card {
+    background: rgb(255 255 255 / 0.03);
+    border: 1px solid var(--color-white-08);
+    border-radius: var(--radius-md);
+    padding: clamp(20px, 3vw, 32px);
+  }
+  .card-navy {
+    background: var(--color-night-navy);
+    border-color: rgb(255 255 255 / 0.1);
+  }
+
+  /* ---------- Insignias / etiquetas ---------- */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-alt);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    line-height: 1.4;
+  }
+  .badge-cyan {
+    background: var(--color-ion-cyan);
+    color: var(--color-space-black);
+  }
+  .badge-orange {
+    background: var(--color-flare-orange);
+    color: var(--color-space-black);
+  }
+  .badge-outline {
+    border: 1px solid var(--color-module-steel);
+    color: var(--color-white-75);
+    background: transparent;
+  }
+
+  /* ---------- Formularios ---------- */
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .form-label {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--color-white-90);
+  }
+  .form-input,
+  .form-select,
+  .form-textarea {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 16px;
+    background: rgb(255 255 255 / 0.04);
+    border: 1px solid var(--color-white-12);
+    border-radius: var(--radius-sm);
+    color: var(--color-white-90);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.5;
+    transition: border-color 0.2s var(--ease-brand), background-color 0.2s var(--ease-brand);
+  }
+  .form-input::placeholder,
+  .form-textarea::placeholder {
+    color: var(--color-white-60);
+  }
+  .form-input:hover,
+  .form-select:hover,
+  .form-textarea:hover {
+    border-color: rgb(255 255 255 / 0.24);
+  }
+  .form-input:focus-visible,
+  .form-select:focus-visible,
+  .form-textarea:focus-visible {
+    outline: 3px solid var(--color-ion-cyan);
+    outline-offset: 0;
+    border-color: transparent;
+  }
+  .form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%2348F6FF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 16px;
+    padding-right: 42px;
+  }
+  .form-select option {
+    background: var(--color-night-navy);
+    color: var(--color-white);
+  }
+  .form-hint {
+    font-size: 0.8rem;
+    color: var(--color-white-60);
+  }
+
+  /* ---------- Encabezado de sección ----------
+     Gramática oficial del manual: número Michroma 01–05 con el
+     dígito "0" como chip de contorno redondeado. No agregar
+     etiquetas uppercase adicionales sobre el título. */
+  .section-head {
+    margin-bottom: var(--spacing-fluid-lg);
+  }
+  .section-num {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2rem);
+    line-height: 1;
+    color: var(--color-white-90);
+    margin-bottom: 22px;
+  }
+  .section-num-zero {
+    border: 2px solid var(--color-ion-cyan);
+    color: var(--color-ion-cyan);
+    border-radius: 10px;
+    padding: 2px 8px 4px;
+  }
+  .section-head-orange .section-num-zero {
+    border-color: var(--color-flare-orange);
+    color: var(--color-flare-orange);
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: var(--text-display-xl);
+    line-height: var(--text-display-xl--line-height);
+    color: var(--color-white);
+    max-width: 22ch;
+  }
+  .section-lede {
+    margin-top: 16px;
+    color: var(--color-white-75);
+    max-width: 58ch;
+  }
+
+  /* ---------- Motivos orbitales (manual, págs. 4–5) ---------- */
+  .orbit-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgb(84 97 117 / 0.35);
+    pointer-events: none;
+  }
+  .orbit-dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-ion-cyan);
+    box-shadow: 0 0 10px rgb(72 246 255 / 0.6);
+    pointer-events: none;
+  }
+
+  /* ---------- Campo de estrellas ---------- */
+  .starfield {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-repeat: repeat;
+    background-size: 560px 560px;
+    background-image:
+      radial-gradient(1.4px 1.4px at 40px 60px, rgb(255 255 255 / 0.8), transparent 50%),
+      radial-gradient(1px 1px at 180px 120px, rgb(255 255 255 / 0.55), transparent 50%),
+      radial-gradient(1.6px 1.6px at 300px 220px, rgb(72 246 255 / 0.7), transparent 50%),
+      radial-gradient(1px 1px at 420px 80px, rgb(255 255 255 / 0.45), transparent 50%),
+      radial-gradient(1.2px 1.2px at 520px 320px, rgb(255 255 255 / 0.6), transparent 50%),
+      radial-gradient(1px 1px at 120px 420px, rgb(255 255 255 / 0.5), transparent 50%),
+      radial-gradient(1.4px 1.4px at 380px 480px, rgb(248 177 53 / 0.55), transparent 50%);
+  }
+
+  /* ---------- Máscara de isotipo sobre fotografía ----------
+     Patrón B del manual (págs. 8–9): capa base oscurecida +
+     capa nítida recortada con la silueta de la estrella. */
+  .star-mask {
+    -webkit-mask-image: var(--star-mask);
+    mask-image: var(--star-mask);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+  }
+  .sector-frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    background: var(--color-space-black);
+    aspect-ratio: 4 / 3;
+  }
+  .sector-frame > img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .sector-frame-dim {
+    filter: saturate(0.3) brightness(0.4);
+  }
+  .sector-frame::after {
+    /* veladura azul sobre la capa base, debajo de la capa nítida */
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgb(0 38 84 / 0.35);
+    pointer-events: none;
+  }
+  .sector-frame-bright {
+    z-index: 1;
+    -webkit-mask-image: var(--star-mask);
+    mask-image: var(--star-mask);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-size: min(72%, 420px);
+    mask-size: min(72%, 420px);
+  }
+  .sector-frame-tag {
+    position: absolute;
+    z-index: 2;
+    top: clamp(14px, 3vw, 26px);
+    left: clamp(14px, 3vw, 26px);
+    font-family: var(--font-display);
+    font-size: clamp(0.85rem, 0.7rem + 0.8vw, 1.15rem);
+    letter-spacing: 0.08em;
+    color: var(--color-white);
+    text-shadow: 0 1px 8px rgb(0 13 33 / 0.8);
+  }
+  .sector-frame-logo {
+    position: absolute;
+    z-index: 2;
+    bottom: clamp(14px, 3vw, 26px);
+    left: clamp(14px, 3vw, 26px);
+  }
+  .sector-frame-logo img {
+    height: clamp(22px, 4vw, 34px);
+    width: auto;
+  }
+
+  /* ---------- Bloque de código con botón de copia ---------- */
+  .code-panel {
+    background: rgb(0 0 0 / 0.45);
+    border: 1px solid var(--color-white-08);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  .code-panel-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 10px 6px 16px;
+    border-bottom: 1px solid var(--color-white-08);
+    font-family: var(--font-alt);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-white-60);
+  }
+  .code-panel pre {
+    margin: 0;
+    padding: 16px;
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    line-height: 1.65;
+    color: var(--color-white-75);
+    tab-size: 2;
+  }
+  .code-copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 5px 16px;
+    border: 1px solid var(--color-white-12);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--color-white-75);
+    font-family: var(--font-body);
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: color 0.2s var(--ease-brand), border-color 0.2s var(--ease-brand);
+  }
+  .code-copy:hover {
+    color: var(--color-ion-cyan);
+    border-color: var(--color-ion-cyan);
+  }
+  .code-copy.is-copied {
+    color: var(--color-space-black);
+    background: var(--color-ion-cyan);
+    border-color: var(--color-ion-cyan);
+  }
+
+  /* ---------- Contenedor de tablas (scroll propio en mobile) ---------- */
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--color-white-08);
+    border-radius: var(--radius-sm);
+  }
+  .table-wrap table {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  .table-wrap th {
+    text-align: left;
+    font-family: var(--font-alt);
+    font-weight: 500;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-white-60);
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--color-white-12);
+    background: rgb(255 255 255 / 0.03);
+  }
+  .table-wrap td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--color-white-08);
+    color: var(--color-white-75);
+    vertical-align: top;
+  }
+  .table-wrap tr:last-child td {
+    border-bottom: 0;
+  }
+
+  /* ---------- Grilla de sponsors ----------
+     Logos en escala de grises que recuperan color al interactuar.
+     2 columnas en mobile, 4 a partir de 720px. La tile puede ser
+     un enlace (sponsor con sitio) o un div (sponsor solo texto). */
+  .sponsor-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  @media (min-width: 720px) {
+    .sponsor-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .sponsor-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 116px;
+    padding: 18px 14px;
+    border: 1px solid var(--color-white-08);
+    border-radius: var(--radius-md);
+    background: rgb(255 255 255 / 0.03);
+    text-align: center;
+    text-decoration: none;
+    transition:
+      border-color 0.3s var(--ease-brand),
+      background-color 0.3s var(--ease-brand);
+  }
+  .sponsor-tile img {
+    max-width: 78%;
+    max-height: 52px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.75;
+    transition:
+      filter 0.3s var(--ease-brand),
+      opacity 0.3s var(--ease-brand);
+  }
+  /* transform vive en su propia transition, aplicada solo junto a
+     :hover/:focus-visible — así no compite con el tween GSAP de
+     scroll-reveal en cascada (data-reveal="stagger" en .sponsor-grid),
+     que anima el mismo transform inline al entrar en viewport. */
+  a.sponsor-tile:hover,
+  a.sponsor-tile:focus-visible {
+    border-color: rgb(72 246 255 / 0.45);
+    background: rgb(72 246 255 / 0.05);
+    transform: translateY(-3px);
+    transition:
+      border-color 0.3s var(--ease-brand),
+      background-color 0.3s var(--ease-brand),
+      transform 0.3s var(--ease-out-quart);
+  }
+  a.sponsor-tile:hover img,
+  a.sponsor-tile:focus-visible img {
+    filter: none;
+    opacity: 1;
+  }
+  .sponsor-tile-name {
+    font-family: var(--font-alt);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.5;
+    color: var(--color-white-60);
+    transition: color 0.3s var(--ease-brand);
+  }
+  a.sponsor-tile:hover .sponsor-tile-name,
+  a.sponsor-tile:focus-visible .sponsor-tile-name {
+    color: var(--color-ion-cyan);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sponsor-tile,
+    .sponsor-tile img,
+    .sponsor-tile-name,
+    a.sponsor-tile:hover,
+    a.sponsor-tile:focus-visible {
+      transition: none;
+    }
+  }
+
+  /* ---------- Movimiento reducido ----------
+     La garantía de prefers-reduced-motion viaja con el design
+     system: todo componente con transición de movimiento queda
+     neutralizado sin depender de la página consumidora. */
+  @media (prefers-reduced-motion: reduce) {
+    .skip-link,
+    .btn,
+    .btn:active,
+    .btn-circle,
+    .code-copy,
+    .navbar-link {
+      transition: none;
+    }
+  }
+}

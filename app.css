@@ -1,0 +1,10 @@
+/* ============================================================
+   Entrada de Tailwind del sitio del hackathon.
+   Importa el design system y registra sus propias rutas de
+   detección de clases (source(none) desactiva la automática).
+   Compilar: npm run build:css
+   ============================================================ */
+@import "./design-system/tokens.css";
+@source "./index.html";
+@source "./reglamento.html";
+@source "./codigo-de-conducta.html";
