@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Hackathon Argentina Space 2026: 11 y 12 de noviembre en el Centro de Convenciones de Salta. Dos días para crear soluciones para la economía espacial argentina. Inscripciones próximamente.">
+  <meta name="description" content="Hackathon Argentina Space 2026: 11, 12 y 13 de noviembre en el Centro de Convenciones de Salta. Tres días para crear soluciones para la economía espacial argentina. Inscripciones abiertas en Luma.">
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#000D21">
-  <title>Hackathon Argentina Space 2026 · 11 y 12 de noviembre · Salta</title>
+  <title>Hackathon Argentina Space 2026 · 11, 12 y 13 de noviembre · Salta</title>
 
   <meta property="og:type" content="website">
   <meta property="og:locale" content="es_AR">
   <meta property="og:title" content="Hackathon Argentina Space 2026">
-  <meta property="og:description" content="11 y 12 de noviembre de 2026, Centro de Convenciones de Salta. Dos días para crear soluciones para la economía espacial argentina.">
+  <meta property="og:description" content="11, 12 y 13 de noviembre de 2026, Centro de Convenciones de Salta. Tres días para crear soluciones para la economía espacial argentina.">
   <!-- TODO(og): reemplazar por la URL absoluta definitiva cuando se publique el dominio -->
   <meta property="og:image" content="/assets/photos/fondo_tierra_orbita.jpg">
 
@@ -315,12 +315,40 @@
       letter-spacing: inherit;
       color: inherit;
     }
+    .track-logos {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px 22px;
+      min-height: 20px;
+      margin-bottom: 14px;
+    }
+    .track-logos img {
+      height: 20px;
+      width: auto;
+      max-width: 100%;
+    }
     .track-stage {
       position: relative;
       overflow: hidden;
       aspect-ratio: 4 / 3;
       display: grid;
       place-items: center;
+    }
+    .track-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .track-stage:has(.track-photo)::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(to bottom, rgb(5 10 20 / 0.7), rgb(5 10 20 / 0) 55%);
+      pointer-events: none;
     }
     .track-stage .track-iso {
       position: relative;
@@ -476,38 +504,7 @@
       color: var(--color-white-60);
     }
 
-    /* ---------- 04 · Organizadores ---------- */
-    .org-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
-      gap: 20px;
-      align-items: stretch;
-    }
-    .org-card {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 14px;
-      min-width: 0;
-    }
-    .org-card img {
-      height: 32px;
-      width: auto;
-    }
-    .org-card h3 {
-      font-family: var(--font-display);
-      font-weight: 400;
-      font-size: var(--text-display-md);
-      line-height: var(--text-display-md--line-height);
-      color: var(--color-white);
-    }
-    .org-card p {
-      font-size: 0.95rem;
-      color: var(--color-white-75);
-      max-width: 48ch;
-    }
-
-    /* ---------- 05 · Recursos ---------- */
+    /* ---------- 04 · Recursos ---------- */
     .resource-group + .resource-group {
       margin-top: var(--spacing-fluid-lg);
     }
@@ -751,16 +748,11 @@
         <a class="navbar-link" href="#tracks">Tracks</a>
         <a class="navbar-link" href="#agenda">Agenda</a>
         <a class="navbar-link" href="#premios">Premios</a>
-        <a class="navbar-link" href="#organizadores">Organizadores</a>
         <a class="navbar-link" href="#recursos">Recursos</a>
         <a class="navbar-link" href="#faq">FAQ</a>
         <a class="navbar-link" href="#sponsors">Sponsors</a>
       </div>
-      <a class="btn btn-primary navbar-cta" href="#inscripcion">Inscribite</a>
-      <!-- TODO(luma): al tener el ID del evento, reemplazar el enlace anterior por:
-      <button class="btn btn-primary navbar-cta" type="button"
-        data-luma-action="checkout" data-luma-event-id="LUMA_EVENT_ID">Inscribite</button>
-      y activar el script #luma-checkout al final del documento. -->
+      <a class="btn btn-primary navbar-cta" href="https://luma.com/ivdtiv4q" target="_blank" rel="noopener noreferrer">Inscribite</a>
       <button class="navbar-toggle" type="button" id="navbar-toggle"
               aria-expanded="false" aria-controls="navbar-panel" aria-label="Abrir menú">
         <span class="navbar-toggle-icon" aria-hidden="true"></span>
@@ -771,11 +763,10 @@
       <a class="navbar-link" href="#tracks">Tracks</a>
       <a class="navbar-link" href="#agenda">Agenda</a>
       <a class="navbar-link" href="#premios">Premios</a>
-      <a class="navbar-link" href="#organizadores">Organizadores</a>
       <a class="navbar-link" href="#recursos">Recursos</a>
       <a class="navbar-link" href="#faq">FAQ</a>
       <a class="navbar-link" href="#sponsors">Sponsors</a>
-      <a class="btn btn-primary navbar-cta" href="#inscripcion">Inscribite</a>
+      <a class="btn btn-primary navbar-cta" href="https://luma.com/ivdtiv4q" target="_blank" rel="noopener noreferrer">Inscribite</a>
     </div>
   </nav>
 
@@ -811,14 +802,10 @@
              alt="Argentina Space: wordmark blanco con isotipo de estrella naranja y estela horizontal"
              width="1297" height="363" fetchpriority="high">
         <h1 class="hero-title">Hackathon Argentina Space 2026</h1>
-        <p class="hero-meta">11 y 12 de noviembre · Centro de Convenciones de Salta</p>
-        <p class="hero-lede">Dos días de trabajo intensivo para crear soluciones sobre los sectores donde la economía espacial argentina ya tiene impacto.</p>
+        <p class="hero-meta">11, 12 y 13 de noviembre · Centro de Convenciones de Salta</p>
+        <p class="hero-lede">Tres días de trabajo intensivo para crear soluciones sobre los sectores donde la economía espacial argentina ya tiene impacto.</p>
         <div class="hero-ctas">
-          <a class="btn btn-primary" href="#inscripcion">Inscribite al hackathon</a>
-          <!-- TODO(luma): al tener el ID del evento, reemplazar el enlace anterior por:
-          <button class="btn btn-primary" type="button"
-            data-luma-action="checkout" data-luma-event-id="LUMA_EVENT_ID">Inscribite al hackathon</button>
-          y activar el script #luma-checkout al final del documento. -->
+          <a class="btn btn-primary" href="https://luma.com/ivdtiv4q" target="_blank" rel="noopener noreferrer">Inscribite al hackathon</a>
           <a class="btn btn-ghost" href="#agenda">Ver agenda</a>
         </div>
       </div>
@@ -838,7 +825,7 @@
            loading="lazy" decoding="async" width="1920" height="1080">
       <div class="declaration-text" data-reveal>
         <p>El hackathon convoca a desarrolladores, diseñadores, estudiantes y perfiles de negocio a resolver desafíos reales de los sectores productivos donde la economía espacial ya opera.</p>
-        <p>Argentina Space impulsa un ecosistema nacional con Salta como epicentro: dos días para transformar talento local en soluciones de escala global.</p>
+        <p>Argentina Space impulsa un ecosistema nacional con Salta como epicentro: tres días para transformar talento local en soluciones de escala global.</p>
       </div>
     </section>
 
@@ -850,59 +837,45 @@
         <header class="section-head">
           <p class="section-num"><span class="section-num-zero">0</span>1</p>
           <h2 class="section-title">Tracks</h2>
-          <p class="section-lede">Tres desafíos alineados a los sectores del programa. Cada equipo elige un track y trabaja sobre problemas reales del sector durante las dos jornadas.</p>
+          <p class="section-lede">Dos desafíos alineados a los sectores del programa. Cada equipo elige un track y trabaja sobre problemas reales del sector durante las tres jornadas.</p>
         </header>
 
         <!-- SLOT(tracks): contenido interino editable; reemplazar títulos y
              descripciones cuando se confirmen los desafíos definitivos. -->
         <div class="track-grid">
           <article class="track">
-            <figure class="sector-frame" data-reveal="mask">
-              <img class="sector-frame-dim" src="assets/photos/sector_mineria.jpg" alt=""
-                   loading="lazy" decoding="async" width="3051" height="1717" aria-hidden="true">
-              <img class="sector-frame-bright" src="assets/photos/sector_mineria.jpg"
-                   alt="Camión minero de gran porte en un yacimiento a cielo abierto, revelado en nitidez a través de la estrella del isotipo"
-                   loading="lazy" decoding="async" width="3051" height="1717">
-              <figcaption class="sector-frame-tag"><h3>Minería</h3></figcaption>
-              <span class="sector-frame-logo" aria-hidden="true">
-                <img src="assets/logo/logo_horizontal_positivo.png" alt=""
-                     loading="lazy" decoding="async" width="1297" height="363">
-              </span>
-            </figure>
-            <div class="track-body">
-              <p>Litio, cobre y la puna salteña: datos satelitales, monitoreo remoto y automatización para una minería más eficiente y trazable.</p>
+            <div class="track-logos">
+              <img src="assets/logo/logo_horizontal_positivo.png" alt="Argentina Space" height="20" loading="lazy" decoding="async">
             </div>
-          </article>
-
-          <article class="track">
-            <figure class="sector-frame" data-reveal="mask">
-              <img class="sector-frame-dim" src="assets/photos/sector_agronomia.jpg" alt=""
-                   loading="lazy" decoding="async" width="2965" height="1617" aria-hidden="true">
-              <img class="sector-frame-bright" src="assets/photos/sector_agronomia.jpg"
-                   alt="Tractor trabajando un campo argentino, revelado en nitidez a través de la estrella del isotipo"
-                   loading="lazy" decoding="async" width="2965" height="1617">
-              <figcaption class="sector-frame-tag"><h3>Agronomía</h3></figcaption>
-              <span class="sector-frame-logo" aria-hidden="true">
-                <img src="assets/logo/logo_horizontal_positivo.png" alt=""
-                     loading="lazy" decoding="async" width="1297" height="363">
-              </span>
-            </figure>
-            <div class="track-body">
-              <p>Observación de la Tierra al servicio del campo: agricultura de precisión, riesgo climático y manejo inteligente de recursos.</p>
-            </div>
-          </article>
-
-          <article class="track">
             <div class="card card-navy track-stage" data-reveal>
-              <h3 class="track-stage-tag">New Space</h3>
-              <span class="orbit-ring" style="height: 68%; aspect-ratio: 1 / 1; top: 50%; left: 50%; transform: translate(-50%, -50%);" aria-hidden="true"></span>
-              <span class="orbit-dot" style="top: 33%; left: 72%; transform: translate(-50%, -50%);" aria-hidden="true"></span>
-              <span class="orbit-dot" style="top: 62%; left: 26%; transform: translate(-50%, -50%);" aria-hidden="true"></span>
-              <img class="track-iso" src="assets/logo/isotipo_estrella_cian.svg"
-                   alt="" width="220" height="220" aria-hidden="true">
+              <h3 class="track-stage-tag">Rovers</h3>
+              <video class="track-photo" muted loop playsinline preload="metadata"
+                     poster="assets/photos/track_rovers.jpg" aria-label="Rover prototipo de exploración planetaria con ruedas de aluminio, trasladado en un predio al aire libre">
+                <source src="assets/video/track-rovers.webm" type="video/webm">
+                <source src="assets/video/track-rovers.mp4" type="video/mp4">
+              </video>
             </div>
             <div class="track-body">
-              <p>Del espacio como ciencia, al espacio como mercado: servicios en órbita, datos satelitales y nueva infraestructura espacial.</p>
+              <p>Prototipos de rovers para la exploración espacial: vehículos que recorren terrenos extremos, navegan y recolectan datos donde las personas no llegan.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-logos">
+              <img src="assets/sponsors/avalanche-logo.svg" alt="Avalanche" height="20" loading="lazy" decoding="async">
+              <img src="assets/sponsors/team1-logo.svg" alt="Team1" height="20" loading="lazy" decoding="async">
+              <img src="assets/sponsors/oracle-logo.svg" alt="Oracle" height="20" loading="lazy" decoding="async">
+            </div>
+            <div class="card card-navy track-stage" data-reveal>
+              <h3 class="track-stage-tag">Blockchain</h3>
+              <video class="track-photo" muted loop playsinline preload="metadata"
+                     poster="assets/photos/track_blockchain.jpg" aria-label="Animación de una grilla de bloques conectados por nodos de luz, una cadena de bloques">
+                <source src="assets/video/track-blockchain.webm" type="video/webm">
+                <source src="assets/video/track-blockchain.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="track-body">
+              <p>Trazabilidad, identidad y activos digitales sobre redes descentralizadas: datos espaciales verificables y nuevos modelos de confianza.</p>
             </div>
           </article>
         </div>
@@ -917,7 +890,7 @@
         <header class="section-head">
           <p class="section-num"><span class="section-num-zero">0</span>2</p>
           <h2 class="section-title">Agenda</h2>
-          <p class="section-lede">Dos jornadas completas en el Centro de Convenciones de Salta. Los horarios detallados se publicarán antes del evento.</p>
+          <p class="section-lede">Tres jornadas completas en el Centro de Convenciones de Salta. Los horarios detallados se publicarán antes del evento.</p>
         </header>
 
         <!-- SLOT(agenda): esqueleto interino editable; completar horarios y
@@ -956,6 +929,11 @@
               </li>
               <li class="timeline-item">
                 <span class="orbit-dot" aria-hidden="true"></span>
+                <h4>Mentorías</h4>
+                <p>Rondas de consulta con mentores de cada track.</p>
+              </li>
+              <li class="timeline-item">
+                <span class="orbit-dot" aria-hidden="true"></span>
                 <h4>Cierre del día</h4>
                 <p>Balance de la jornada y pautas para el día siguiente.</p>
               </li>
@@ -984,6 +962,26 @@
                 <h4>Mentorías</h4>
                 <p>Rondas de consulta con mentores de cada track.</p>
               </li>
+              <li class="timeline-item">
+                <span class="orbit-dot" aria-hidden="true"></span>
+                <h4>Cierre del día</h4>
+                <p>Balance de la jornada y pautas para el último día.</p>
+              </li>
+            </ol>
+            </div>
+          </div>
+
+          <div class="timeline-day">
+            <div class="timeline-day-head">
+              <h3>Día 3</h3>
+              <p class="timeline-day-date">Viernes 13 de noviembre</p>
+            </div>
+            <div class="timeline-track">
+              <svg class="timeline-rail" aria-hidden="true" focusable="false"
+                   viewBox="0 0 2 1000" preserveAspectRatio="none">
+                <path class="timeline-rail-path" d="M1 0 L1 1000"/>
+              </svg>
+            <ol class="timeline-items">
               <li class="timeline-item">
                 <span class="orbit-dot" aria-hidden="true"></span>
                 <h4>Entrega de proyectos</h4>
@@ -1049,42 +1047,12 @@
     </section>
 
     <!-- ============================================================
-         04 · ORGANIZADORES
-         ============================================================ -->
-    <section class="page-section" id="organizadores">
-      <div class="container-page">
-        <header class="section-head">
-          <p class="section-num"><span class="section-num-zero">0</span>4</p>
-          <h2 class="section-title">Organizadores</h2>
-          <p class="section-lede">El hackathon es organizado por Argentina Space junto a instituciones del ecosistema tecnológico y productivo.</p>
-        </header>
-
-        <!-- SLOT(organizadores): agregar una .card.org-card por cada
-             institución confirmada (logo, nombre, rol y enlace). -->
-        <div class="org-grid" data-reveal="stagger">
-          <article class="card card-navy org-card">
-            <img src="assets/logo/logo_horizontal_positivo.png"
-                 alt="Argentina Space: logotipo horizontal"
-                 loading="lazy" decoding="async" width="1297" height="363">
-            <span class="badge badge-outline">Organización general</span>
-            <p>Argentina Space impulsa el ecosistema nacional de economía espacial con Salta como epicentro, y lleva adelante la organización general del evento.</p>
-          </article>
-          <article class="card org-card">
-            <h3>Instituciones aliadas</h3>
-            <span class="badge badge-outline">En confirmación</span>
-            <p>Las instituciones que acompañan la organización del hackathon se anunciarán próximamente en este espacio.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         05 · RECURSOS
+         04 · RECURSOS
          ============================================================ -->
     <section class="page-section" id="recursos">
       <div class="container-page">
         <header class="section-head">
-          <p class="section-num"><span class="section-num-zero">0</span>5</p>
+          <p class="section-num"><span class="section-num-zero">0</span>4</p>
           <h2 class="section-title">Recursos</h2>
           <p class="section-lede">Todo lo necesario para participar: documentos oficiales, documentación técnica y los canales de la comunidad.</p>
         </header>
@@ -1104,7 +1072,7 @@
           <div class="resource-doc">
             <div class="resource-doc-info">
               <strong>Reglamento</strong>
-              <span>Reglas de trabajo durante las dos jornadas del evento.</span>
+              <span>Reglas de trabajo durante las tres jornadas del evento.</span>
             </div>
             <a class="btn btn-ghost" href="reglamento.html">Leer el reglamento</a>
           </div>
@@ -1159,7 +1127,7 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
     </section>
 
     <!-- ============================================================
-         FAQ (sin numerar: la secuencia 01–05 es la historia del
+         FAQ (sin numerar: la secuencia 01–04 es la historia del
          evento; las preguntas frecuentes la acompañan sin alterarla)
          ============================================================ -->
     <section class="page-section" id="faq">
@@ -1200,7 +1168,7 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
             <summary class="faq-summary">¿Qué hay que llevar?</summary>
             <div class="faq-body">
               <div class="faq-body-inner">
-                <p>Computadora personal, cargador y todo lo que el equipo necesite para trabajar durante las dos jornadas. El detalle de materiales y servicios disponibles en el Centro de Convenciones se publica junto con el reglamento.</p>
+                <p>Computadora personal, cargador y todo lo que el equipo necesite para trabajar durante las tres jornadas. El detalle de materiales y servicios disponibles en el Centro de Convenciones se publica junto con el reglamento.</p>
               </div>
             </div>
           </details>
@@ -1208,7 +1176,7 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
             <summary class="faq-summary">¿Sobre qué se trabaja?</summary>
             <div class="faq-body">
               <div class="faq-body-inner">
-                <p>Cada equipo elige uno de los tres tracks del evento —Minería, Agronomía y New Space— y desarrolla una solución sobre desafíos reales de ese sector. Los desafíos definitivos se presentan en la apertura.</p>
+                <p>Cada equipo elige uno de los dos tracks del evento —Rovers y Blockchain— y desarrolla una solución sobre desafíos reales de ese sector. Los desafíos definitivos se presentan en la apertura.</p>
               </div>
             </div>
           </details>
@@ -1216,7 +1184,7 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
             <summary class="faq-summary">¿Cómo me inscribo?</summary>
             <div class="faq-body">
               <div class="faq-body-inner">
-                <p>La inscripción se realizará a través de Luma. Todavía no está abierta: al enviar un correo a la casilla del evento, el equipo responde por esa misma vía cuando se habilita.</p>
+                <p>La inscripción se realiza a través de Luma, en <a href="https://luma.com/ivdtiv4q" target="_blank" rel="noopener noreferrer">luma.com/ivdtiv4q</a>.</p>
               </div>
             </div>
           </details>
@@ -1225,7 +1193,7 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
     </section>
 
     <!-- ============================================================
-         SPONSORS (sin numerar: la secuencia 01–05 es la historia
+         SPONSORS (sin numerar: la secuencia 01–04 es la historia
          del evento; el apoyo institucional va aparte)
          ============================================================ -->
     <section class="page-section" id="sponsors">
@@ -1236,6 +1204,26 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
         </header>
 
         <div class="sponsor-grid" data-reveal="stagger">
+          <a class="sponsor-tile" href="https://www.avalanche.com/" target="_blank" rel="noopener noreferrer">
+            <img src="assets/sponsors/avalanche-logo.svg" alt="Avalanche (AVAX)"
+                 loading="lazy" decoding="async" width="815" height="120">
+            <span class="sponsor-tile-name">Avalanche</span>
+          </a>
+          <a class="sponsor-tile" href="https://www.team1.network/" target="_blank" rel="noopener noreferrer">
+            <img src="assets/sponsors/team1-logo.svg" alt="Team1"
+                 loading="lazy" decoding="async" width="1027" height="289">
+            <span class="sponsor-tile-name">Team1</span>
+          </a>
+          <a class="sponsor-tile" href="https://www.oracle.com/" target="_blank" rel="noopener noreferrer">
+            <img src="assets/sponsors/oracle-logo.svg" alt="Oracle"
+                 loading="lazy" decoding="async" width="231" height="30">
+            <span class="sponsor-tile-name">Oracle</span>
+          </a>
+          <a class="sponsor-tile" href="https://vapadu.ai/" target="_blank" rel="noopener noreferrer">
+            <img src="assets/sponsors/vapadu-logo.webp" alt="Vapadu"
+                 loading="lazy" decoding="async" width="2013" height="408">
+            <span class="sponsor-tile-name">Vapadu</span>
+          </a>
           <a class="sponsor-tile" href="https://www.alchemia-tech.com/" target="_blank" rel="noopener noreferrer">
             <img src="assets/sponsors/alchemia-blanco.jpg" alt="Alchemia LLC"
                  loading="lazy" decoding="async" width="1160" height="188">
@@ -1289,7 +1277,7 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
 
     <!-- ============================================================
          INSCRIPCIÓN · Patrón E: cierre de conversión.
-         Estado pre-link activo hasta tener el ID del evento en Luma.
+         Enlace directo al evento en Luma.
          ============================================================ -->
     <section class="closing" id="inscripcion" aria-labelledby="inscripcion-titulo">
       <div class="starfield" aria-hidden="true"></div>
@@ -1306,16 +1294,10 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
         </g>
       </svg>
       <div class="container-page closing-inner" data-reveal="stagger">
-        <span class="badge badge-orange">Inscripciones próximamente</span>
+        <span class="badge badge-orange">Inscripciones abiertas</span>
         <h2 id="inscripcion-titulo">Inscripción al hackathon</h2>
-        <p class="closing-copy">La inscripción se realizará a través de Luma y se anunciará en este sitio y en los canales oficiales de Argentina Space.</p>
-        <a class="btn btn-primary" href="mailto:marketing@argentinaspace.com?subject=Aviso%20de%20apertura%20%C2%B7%20Hackathon%20Argentina%20Space%202026">Quiero recibir el aviso</a>
-        <p class="form-hint">Al enviar el correo, el equipo del evento responde por esa misma vía cuando abren las inscripciones.</p>
-        <!-- TODO(luma): al tener el ID del evento, reemplazar el bloque
-             badge + enlace mailto + nota por el snippet oficial:
-        <button class="btn btn-primary" type="button"
-          data-luma-action="checkout" data-luma-event-id="LUMA_EVENT_ID">Inscribite al hackathon</button>
-        y activar el script #luma-checkout al final del documento. -->
+        <p class="closing-copy">La inscripción se realiza a través de Luma. Reservá tu lugar para participar del hackathon.</p>
+        <a class="btn btn-primary" href="https://luma.com/ivdtiv4q" target="_blank" rel="noopener noreferrer">Inscribite al hackathon</a>
       </div>
     </section>
   </main>
@@ -1326,7 +1308,7 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
         <img src="assets/logo/logo_horizontal_positivo.png"
              alt="Argentina Space: logotipo horizontal" width="1297" height="363"
              class="h-9 w-auto mb-4" loading="lazy" decoding="async">
-        <p class="text-white-60 text-sm max-w-[52ch]">Hackathon Argentina Space 2026 · 11 y 12 de noviembre · Centro de Convenciones de Salta.</p>
+        <p class="text-white-60 text-sm max-w-[52ch]">Hackathon Argentina Space 2026 · 11, 12 y 13 de noviembre · Centro de Convenciones de Salta.</p>
       </div>
       <nav class="min-w-0" aria-label="Secciones del sitio (pie de página)">
         <p class="font-display text-sm text-white mb-3">Secciones</p>
@@ -1335,7 +1317,6 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
           <li><a class="inline-flex items-center min-h-11 text-sm text-white-75 hover:text-white" href="#tracks">Tracks</a></li>
           <li><a class="inline-flex items-center min-h-11 text-sm text-white-75 hover:text-white" href="#agenda">Agenda</a></li>
           <li><a class="inline-flex items-center min-h-11 text-sm text-white-75 hover:text-white" href="#premios">Premios</a></li>
-          <li><a class="inline-flex items-center min-h-11 text-sm text-white-75 hover:text-white" href="#organizadores">Organizadores</a></li>
           <li><a class="inline-flex items-center min-h-11 text-sm text-white-75 hover:text-white" href="#recursos">Recursos</a></li>
           <li><a class="inline-flex items-center min-h-11 text-sm text-white-75 hover:text-white" href="#faq">FAQ</a></li>
           <li><a class="inline-flex items-center min-h-11 text-sm text-white-75 hover:text-white" href="#sponsors">Sponsors</a></li>
@@ -1375,10 +1356,6 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
   </footer>
 
   <p class="sr-only" role="status" aria-live="polite" id="copy-status"></p>
-
-  <!-- TODO(luma): activar junto con los tres CTAs de checkout.
-       El script se incluye una sola vez aunque haya varios botones.
-  <script id="luma-checkout" src="https://embed.lu.ma/checkout-button.js"></script> -->
 
   <!-- Librerías de movimiento vendorizadas (sin CDN): GSAP 3.15.0 +
        ScrollTrigger + Lenis 1.3.25 ≈ 136 KB minificados en total.
@@ -1525,6 +1502,25 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
           }
         });
       });
+
+            /* Videos de los tracks: decorativos y mudos. Solo se reproducen
+         a la vista y sin preferencia de movimiento reducido (con ella
+         queda el póster). */
+      (function () {
+        var vids = document.querySelectorAll('video.track-photo');
+        if (!vids.length || !('IntersectionObserver' in window)) { return; }
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting && !reduceMotion.matches) {
+              var p = e.target.play();
+              if (p && p.catch) { p.catch(function () {}); }
+            } else {
+              e.target.pause();
+            }
+          });
+        }, { threshold: 0.25 });
+        vids.forEach(function (v) { io.observe(v); });
+      })();
 
       /* ---------- Video de portada ----------
          El markup no lleva autoplay: la reproducción la inicia este
@@ -1704,7 +1700,7 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
         document.querySelectorAll('[data-reveal]').forEach(function (el) {
           var kind = el.getAttribute('data-reveal');
           if (kind === 'stagger') {
-            /* Grillas (sponsors, organizadores, FAQ, cierre): cascada */
+            /* Grillas (sponsors, FAQ, cierre): cascada */
             registerReveal(el, gsap.from(el.children, {
               opacity: 0, y: 30, duration: 0.7, ease: 'power2.out', stagger: 0.12,
               scrollTrigger: { trigger: el, start: 'top 80%' }
