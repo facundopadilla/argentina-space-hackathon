@@ -583,27 +583,6 @@
     .community-marquee:focus-within .community-track {
       animation-play-state: paused;
     }
-    .community-marquee.is-paused .community-track {
-      animation-play-state: paused;
-    }
-    .community-controls {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 12px;
-    }
-    .community-toggle {
-      min-height: 44px;
-      padding: 8px 16px;
-      border: 1px solid var(--color-white-12);
-      border-radius: var(--radius-pill);
-      background: transparent;
-      color: var(--color-white-75);
-      font-family: var(--font-alt);
-      font-size: 0.78rem;
-      letter-spacing: 0.04em;
-      cursor: pointer;
-    }
-    .community-toggle:hover { color: var(--color-ion-cyan); border-color: var(--color-ion-cyan); }
     .community-set {
       display: flex;
       align-items: center;
@@ -644,7 +623,6 @@
       to { transform: translateX(-50%); }
     }
     @media (prefers-reduced-motion: reduce) {
-      .community-controls { display: none; }
       .community-track { animation: none; width: auto; justify-content: center; }
       .community-set { flex-wrap: wrap; justify-content: center; row-gap: 24px; }
       .community-set[aria-hidden="true"] { display: none; }
@@ -1373,9 +1351,6 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
           <p class="section-lede">Comunidades que acompañan y difunden el hackathon.</p>
         </header>
       </div>
-      <div class="container-page community-controls">
-        <button class="community-toggle" type="button" aria-pressed="false">Pausar animación</button>
-      </div>
       <div class="community-marquee" data-reveal>
         <div class="community-track">
           <div class="community-set">
@@ -1389,6 +1364,7 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
             <div class="community-logo community-logo-icon"><a href="https://desafia.tech/" target="_blank" rel="noopener noreferrer"><img src="assets/community/desafia.svg" alt="" loading="lazy" decoding="async" width="679" height="679"><span class="community-label">DESAFIA</span></a></div>
             <div class="community-logo community-logo-icon"><img src="assets/community/saltagamedevs.png" alt="Salta Game Devs" loading="lazy" decoding="async" width="689" height="300"></div>
             <div class="community-logo community-logo-icon"><a href="https://qilinforge.com/" target="_blank" rel="noopener noreferrer"><img src="assets/community/qilinforge.png" alt="" loading="lazy" decoding="async" width="300" height="300"><span class="community-label">Qilin Forge</span></a></div>
+            <div class="community-logo"><img src="assets/community/fichitabit.png" alt="Fichita Bit, coworking, café y bar" loading="lazy" decoding="async" width="1255" height="300"></div>
           </div>
           <div class="community-set" aria-hidden="true">
             <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://novasurecosistema.com/" target="_blank" rel="noopener noreferrer"><img src="assets/community/novasur.png" alt="Novasür" loading="lazy" decoding="async" width="401" height="300"></a></div>
@@ -1401,6 +1377,7 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
             <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://desafia.tech/" target="_blank" rel="noopener noreferrer"><img src="assets/community/desafia.svg" alt="" loading="lazy" decoding="async" width="679" height="679"><span class="community-label">DESAFIA</span></a></div>
             <div class="community-logo community-logo-icon"><img src="assets/community/saltagamedevs.png" alt="Salta Game Devs" loading="lazy" decoding="async" width="689" height="300"></div>
             <div class="community-logo community-logo-icon"><a href="https://qilinforge.com/" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/community/qilinforge.png" alt="" loading="lazy" decoding="async" width="300" height="300"><span class="community-label">Qilin Forge</span></a></div>
+            <div class="community-logo"><img src="assets/community/fichitabit.png" alt="Fichita Bit, coworking, café y bar" loading="lazy" decoding="async" width="1255" height="300"></div>
           </div>
           <div class="community-set" aria-hidden="true">
             <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://novasurecosistema.com/" target="_blank" rel="noopener noreferrer"><img src="assets/community/novasur.png" alt="Novasür" loading="lazy" decoding="async" width="401" height="300"></a></div>
@@ -1413,6 +1390,7 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
             <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://desafia.tech/" target="_blank" rel="noopener noreferrer"><img src="assets/community/desafia.svg" alt="" loading="lazy" decoding="async" width="679" height="679"><span class="community-label">DESAFIA</span></a></div>
             <div class="community-logo community-logo-icon"><img src="assets/community/saltagamedevs.png" alt="Salta Game Devs" loading="lazy" decoding="async" width="689" height="300"></div>
             <div class="community-logo community-logo-icon"><a href="https://qilinforge.com/" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/community/qilinforge.png" alt="" loading="lazy" decoding="async" width="300" height="300"><span class="community-label">Qilin Forge</span></a></div>
+            <div class="community-logo"><img src="assets/community/fichitabit.png" alt="Fichita Bit, coworking, café y bar" loading="lazy" decoding="async" width="1255" height="300"></div>
           </div>
           <div class="community-set" aria-hidden="true">
             <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://novasurecosistema.com/" target="_blank" rel="noopener noreferrer"><img src="assets/community/novasur.png" alt="Novasür" loading="lazy" decoding="async" width="401" height="300"></a></div>
@@ -1425,6 +1403,7 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
             <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://desafia.tech/" target="_blank" rel="noopener noreferrer"><img src="assets/community/desafia.svg" alt="" loading="lazy" decoding="async" width="679" height="679"><span class="community-label">DESAFIA</span></a></div>
             <div class="community-logo community-logo-icon"><img src="assets/community/saltagamedevs.png" alt="Salta Game Devs" loading="lazy" decoding="async" width="689" height="300"></div>
             <div class="community-logo community-logo-icon"><a href="https://qilinforge.com/" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/community/qilinforge.png" alt="" loading="lazy" decoding="async" width="300" height="300"><span class="community-label">Qilin Forge</span></a></div>
+            <div class="community-logo"><img src="assets/community/fichitabit.png" alt="Fichita Bit, coworking, café y bar" loading="lazy" decoding="async" width="1255" height="300"></div>
           </div>
         </div>
       </div>
@@ -1658,20 +1637,7 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
         });
       });
 
-            /* Community partners: botón de pausa (WCAG 2.2.2) para quien no
-         puede usar hover; el CSS ya pausa con hover y foco. */
-      (function () {
-        var btn = document.querySelector('.community-toggle');
-        var marquee = document.querySelector('.community-marquee');
-        if (!btn || !marquee) { return; }
-        btn.addEventListener('click', function () {
-          var paused = marquee.classList.toggle('is-paused');
-          btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
-          btn.textContent = paused ? 'Reanudar animación' : 'Pausar animación';
-        });
-      })();
-
-      /* Videos de los tracks: decorativos y mudos. Solo se reproducen
+            /* Videos de los tracks: decorativos y mudos. Solo se reproducen
          a la vista y sin preferencia de movimiento reducido (con ella
          queda el póster). */
       (function () {
