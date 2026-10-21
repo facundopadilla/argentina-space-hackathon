@@ -565,6 +565,91 @@
     .sponsor-tile .sponsor-logo-compact {
       max-height: 34px;
     }
+    /* ---------- Community partners (carrusel infinito) ----------
+       Dos mitades idénticas en una pista; la pista se desplaza -50% y
+       reinicia sin salto. La segunda mitad es aria-hidden. Se pausa con
+       hover/foco y, con movimiento reducido, queda estática y envuelta. */
+    .community-marquee {
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(90deg, #0000, #000 8%, #000 92%, #0000);
+      mask-image: linear-gradient(90deg, #0000, #000 8%, #000 92%, #0000);
+    }
+    .community-track {
+      display: flex;
+      width: max-content;
+      animation: community-scroll 90s linear infinite;
+    }
+    .community-marquee:hover .community-track,
+    .community-marquee:focus-within .community-track {
+      animation-play-state: paused;
+    }
+    .community-marquee.is-paused .community-track {
+      animation-play-state: paused;
+    }
+    .community-controls {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 12px;
+    }
+    .community-toggle {
+      min-height: 44px;
+      padding: 8px 16px;
+      border: 1px solid var(--color-white-12);
+      border-radius: var(--radius-pill);
+      background: transparent;
+      color: var(--color-white-75);
+      font-family: var(--font-alt);
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+    }
+    .community-toggle:hover { color: var(--color-ion-cyan); border-color: var(--color-ion-cyan); }
+    .community-set {
+      display: flex;
+      align-items: center;
+      flex: none;
+    }
+    .community-logo {
+      flex: none;
+      margin-inline: clamp(28px, 5vw, 64px);
+    }
+    .community-logo a {
+      display: block;
+      border-radius: 8px;
+    }
+    .community-logo img {
+      display: block;
+      height: clamp(56px, 8vw, 84px);
+      width: auto;
+    }
+    .community-logo-icon a,
+    .community-logo-icon:not(:has(a)) {
+      display: flex;
+      align-items: center;
+      gap: clamp(12px, 1.6vw, 20px);
+    }
+    .community-label {
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--color-white);
+      white-space: nowrap;
+    }
+    .community-logo-icon img {
+      height: clamp(76px, 11vw, 112px);
+    }
+    @keyframes community-scroll {
+      to { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .community-controls { display: none; }
+      .community-track { animation: none; width: auto; justify-content: center; }
+      .community-set { flex-wrap: wrap; justify-content: center; row-gap: 24px; }
+      .community-set[aria-hidden="true"] { display: none; }
+      .community-marquee { -webkit-mask-image: none; mask-image: none; }
+    }
     .sponsor-cta {
       margin-top: 20px;
       display: flex;
@@ -1279,6 +1364,69 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
     </section>
 
     <!-- ============================================================
+         COMMUNITY PARTNERS (sin numerar). Carrusel infinito de logos.
+         ============================================================ -->
+    <section class="page-section" id="community">
+      <div class="container-page">
+        <header class="section-head">
+          <h2 class="section-title">Community partners</h2>
+          <p class="section-lede">Comunidades que acompañan y difunden el hackathon.</p>
+        </header>
+      </div>
+      <div class="container-page community-controls">
+        <button class="community-toggle" type="button" aria-pressed="false">Pausar animación</button>
+      </div>
+      <div class="community-marquee" data-reveal>
+        <div class="community-track">
+          <div class="community-set">
+            <div class="community-logo community-logo-icon"><a href="https://novasurecosistema.com/" target="_blank" rel="noopener noreferrer"><img src="assets/community/novasur.png" alt="Novasür" loading="lazy" decoding="async" width="401" height="300"></a></div>
+            <div class="community-logo"><img src="assets/community/formosadev.png" alt="Formosa.dev" loading="lazy" decoding="async" width="1021" height="300"></div>
+            <div class="community-logo community-logo-icon"><a href="https://corrientes.dev.ar/" target="_blank" rel="noopener noreferrer"><img src="assets/community/corrientesdev.png" alt="" loading="lazy" decoding="async" width="237" height="300"><span class="community-label">CorrientesDev</span></a></div>
+            <div class="community-logo"><a href="https://jujuy.dev.ar/" target="_blank" rel="noopener noreferrer"><img src="assets/community/jujuydev.png" alt="Jujuy.dev" loading="lazy" decoding="async" width="1108" height="300"></a></div>
+            <div class="community-logo"><a href="https://mardelplata.dev.ar/" target="_blank" rel="noopener noreferrer"><img src="assets/community/mardelplatadev.svg" alt="Mar del Plata Dev" loading="lazy" decoding="async" width="330" height="64"></a></div>
+            <div class="community-logo community-logo-icon"><a href="https://cuyoconnect.com/" target="_blank" rel="noopener noreferrer"><img src="assets/community/cuyoconnect.png" alt="" loading="lazy" decoding="async" width="229" height="300"><span class="community-label">CuyoConnect</span></a></div>
+            <div class="community-logo community-logo-icon"><a href="https://programaconnosotros.com/" target="_blank" rel="noopener noreferrer"><img src="assets/community/pcn.png" alt="" loading="lazy" decoding="async" width="398" height="300"><span class="community-label">PCN</span></a></div>
+            <div class="community-logo community-logo-icon"><a href="https://desafia.tech/" target="_blank" rel="noopener noreferrer"><img src="assets/community/desafia.svg" alt="" loading="lazy" decoding="async" width="679" height="679"><span class="community-label">DESAFIA</span></a></div>
+            <div class="community-logo community-logo-icon"><img src="assets/community/saltagamedevs.png" alt="Salta Game Devs" loading="lazy" decoding="async" width="689" height="300"></div>
+          </div>
+          <div class="community-set" aria-hidden="true">
+            <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://novasurecosistema.com/" target="_blank" rel="noopener noreferrer"><img src="assets/community/novasur.png" alt="Novasür" loading="lazy" decoding="async" width="401" height="300"></a></div>
+            <div class="community-logo"><img src="assets/community/formosadev.png" alt="Formosa.dev" loading="lazy" decoding="async" width="1021" height="300"></div>
+            <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://corrientes.dev.ar/" target="_blank" rel="noopener noreferrer"><img src="assets/community/corrientesdev.png" alt="" loading="lazy" decoding="async" width="237" height="300"><span class="community-label">CorrientesDev</span></a></div>
+            <div class="community-logo"><a tabindex="-1" href="https://jujuy.dev.ar/" target="_blank" rel="noopener noreferrer"><img src="assets/community/jujuydev.png" alt="Jujuy.dev" loading="lazy" decoding="async" width="1108" height="300"></a></div>
+            <div class="community-logo"><a tabindex="-1" href="https://mardelplata.dev.ar/" target="_blank" rel="noopener noreferrer"><img src="assets/community/mardelplatadev.svg" alt="Mar del Plata Dev" loading="lazy" decoding="async" width="330" height="64"></a></div>
+            <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://cuyoconnect.com/" target="_blank" rel="noopener noreferrer"><img src="assets/community/cuyoconnect.png" alt="" loading="lazy" decoding="async" width="229" height="300"><span class="community-label">CuyoConnect</span></a></div>
+            <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://programaconnosotros.com/" target="_blank" rel="noopener noreferrer"><img src="assets/community/pcn.png" alt="" loading="lazy" decoding="async" width="398" height="300"><span class="community-label">PCN</span></a></div>
+            <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://desafia.tech/" target="_blank" rel="noopener noreferrer"><img src="assets/community/desafia.svg" alt="" loading="lazy" decoding="async" width="679" height="679"><span class="community-label">DESAFIA</span></a></div>
+            <div class="community-logo community-logo-icon"><img src="assets/community/saltagamedevs.png" alt="Salta Game Devs" loading="lazy" decoding="async" width="689" height="300"></div>
+          </div>
+          <div class="community-set" aria-hidden="true">
+            <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://novasurecosistema.com/" target="_blank" rel="noopener noreferrer"><img src="assets/community/novasur.png" alt="Novasür" loading="lazy" decoding="async" width="401" height="300"></a></div>
+            <div class="community-logo"><img src="assets/community/formosadev.png" alt="Formosa.dev" loading="lazy" decoding="async" width="1021" height="300"></div>
+            <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://corrientes.dev.ar/" target="_blank" rel="noopener noreferrer"><img src="assets/community/corrientesdev.png" alt="" loading="lazy" decoding="async" width="237" height="300"><span class="community-label">CorrientesDev</span></a></div>
+            <div class="community-logo"><a tabindex="-1" href="https://jujuy.dev.ar/" target="_blank" rel="noopener noreferrer"><img src="assets/community/jujuydev.png" alt="Jujuy.dev" loading="lazy" decoding="async" width="1108" height="300"></a></div>
+            <div class="community-logo"><a tabindex="-1" href="https://mardelplata.dev.ar/" target="_blank" rel="noopener noreferrer"><img src="assets/community/mardelplatadev.svg" alt="Mar del Plata Dev" loading="lazy" decoding="async" width="330" height="64"></a></div>
+            <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://cuyoconnect.com/" target="_blank" rel="noopener noreferrer"><img src="assets/community/cuyoconnect.png" alt="" loading="lazy" decoding="async" width="229" height="300"><span class="community-label">CuyoConnect</span></a></div>
+            <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://programaconnosotros.com/" target="_blank" rel="noopener noreferrer"><img src="assets/community/pcn.png" alt="" loading="lazy" decoding="async" width="398" height="300"><span class="community-label">PCN</span></a></div>
+            <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://desafia.tech/" target="_blank" rel="noopener noreferrer"><img src="assets/community/desafia.svg" alt="" loading="lazy" decoding="async" width="679" height="679"><span class="community-label">DESAFIA</span></a></div>
+            <div class="community-logo community-logo-icon"><img src="assets/community/saltagamedevs.png" alt="Salta Game Devs" loading="lazy" decoding="async" width="689" height="300"></div>
+          </div>
+          <div class="community-set" aria-hidden="true">
+            <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://novasurecosistema.com/" target="_blank" rel="noopener noreferrer"><img src="assets/community/novasur.png" alt="Novasür" loading="lazy" decoding="async" width="401" height="300"></a></div>
+            <div class="community-logo"><img src="assets/community/formosadev.png" alt="Formosa.dev" loading="lazy" decoding="async" width="1021" height="300"></div>
+            <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://corrientes.dev.ar/" target="_blank" rel="noopener noreferrer"><img src="assets/community/corrientesdev.png" alt="" loading="lazy" decoding="async" width="237" height="300"><span class="community-label">CorrientesDev</span></a></div>
+            <div class="community-logo"><a tabindex="-1" href="https://jujuy.dev.ar/" target="_blank" rel="noopener noreferrer"><img src="assets/community/jujuydev.png" alt="Jujuy.dev" loading="lazy" decoding="async" width="1108" height="300"></a></div>
+            <div class="community-logo"><a tabindex="-1" href="https://mardelplata.dev.ar/" target="_blank" rel="noopener noreferrer"><img src="assets/community/mardelplatadev.svg" alt="Mar del Plata Dev" loading="lazy" decoding="async" width="330" height="64"></a></div>
+            <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://cuyoconnect.com/" target="_blank" rel="noopener noreferrer"><img src="assets/community/cuyoconnect.png" alt="" loading="lazy" decoding="async" width="229" height="300"><span class="community-label">CuyoConnect</span></a></div>
+            <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://programaconnosotros.com/" target="_blank" rel="noopener noreferrer"><img src="assets/community/pcn.png" alt="" loading="lazy" decoding="async" width="398" height="300"><span class="community-label">PCN</span></a></div>
+            <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://desafia.tech/" target="_blank" rel="noopener noreferrer"><img src="assets/community/desafia.svg" alt="" loading="lazy" decoding="async" width="679" height="679"><span class="community-label">DESAFIA</span></a></div>
+            <div class="community-logo community-logo-icon"><img src="assets/community/saltagamedevs.png" alt="Salta Game Devs" loading="lazy" decoding="async" width="689" height="300"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
          INSCRIPCIÓN · Patrón E: cierre de conversión.
          Enlace directo al evento en Luma.
          ============================================================ -->
@@ -1506,7 +1654,20 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
         });
       });
 
-            /* Videos de los tracks: decorativos y mudos. Solo se reproducen
+            /* Community partners: botón de pausa (WCAG 2.2.2) para quien no
+         puede usar hover; el CSS ya pausa con hover y foco. */
+      (function () {
+        var btn = document.querySelector('.community-toggle');
+        var marquee = document.querySelector('.community-marquee');
+        if (!btn || !marquee) { return; }
+        btn.addEventListener('click', function () {
+          var paused = marquee.classList.toggle('is-paused');
+          btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+          btn.textContent = paused ? 'Reanudar animación' : 'Pausar animación';
+        });
+      })();
+
+      /* Videos de los tracks: decorativos y mudos. Solo se reproducen
          a la vista y sin preferencia de movimiento reducido (con ella
          queda el póster). */
       (function () {
