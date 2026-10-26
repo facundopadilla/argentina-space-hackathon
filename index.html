@@ -328,6 +328,17 @@
       width: auto;
       max-width: 100%;
     }
+    /* Varios logos: una sola fila para no desalinear las tarjetas */
+    .track-logos-row {
+      flex-wrap: nowrap;
+      gap: 10px 16px;
+    }
+    .track-logos-row img {
+      height: 14px;
+      min-width: 0;
+      object-fit: contain;
+      object-position: left center;
+    }
     .track-stage {
       position: relative;
       overflow: hidden;
@@ -903,7 +914,7 @@
         <header class="section-head">
           <p class="section-num"><span class="section-num-zero">0</span>1</p>
           <h2 class="section-title">Tracks</h2>
-          <p class="section-lede">Dos desafíos alineados a los sectores del programa. Cada equipo elige un track y trabaja sobre problemas reales del sector durante las tres jornadas.</p>
+          <p class="section-lede">Tres desafíos alineados a los sectores del programa. Cada equipo elige un track y trabaja sobre problemas reales del sector durante las tres jornadas.</p>
         </header>
 
         <!-- SLOT(tracks): contenido interino editable; reemplazar títulos y
@@ -927,7 +938,7 @@
           </article>
 
           <article class="track">
-            <div class="track-logos">
+            <div class="track-logos track-logos-row">
               <img src="assets/sponsors/avalanche-logo.svg" alt="Avalanche" height="20" loading="lazy" decoding="async">
               <img src="assets/sponsors/team1-logo.svg" alt="Team1" height="20" loading="lazy" decoding="async">
               <img src="assets/sponsors/oracle-logo.svg" alt="Oracle" height="20" loading="lazy" decoding="async">
@@ -942,6 +953,19 @@
             </div>
             <div class="track-body">
               <p>Trazabilidad, identidad y activos digitales sobre redes descentralizadas: datos espaciales verificables y nuevos modelos de confianza.</p>
+            </div>
+          </article>
+
+          <article class="track">
+            <div class="track-logos">
+              <img src="assets/sponsors/qualydata-logo.svg" alt="QualyData" height="20" loading="lazy" decoding="async">
+            </div>
+            <div class="card card-navy track-stage" data-reveal>
+              <h3 class="track-stage-tag">Datos y Streaming</h3>
+              <img class="track-photo" src="assets/photos/fondo_tierra_orbita.jpg" alt="La Tierra vista desde la órbita, con el horizonte iluminado" loading="lazy" decoding="async">
+            </div>
+            <div class="track-body">
+              <p>Protección de transmisiones digitales: soluciones para resguardar la integridad, la autenticidad y la confidencialidad de datos y streaming.</p>
             </div>
           </article>
         </div>
@@ -1256,7 +1280,7 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
             <summary class="faq-summary">¿Sobre qué se trabaja?</summary>
             <div class="faq-body">
               <div class="faq-body-inner">
-                <p>Cada equipo elige uno de los dos tracks del evento —Rovers y Blockchain— y desarrolla una solución sobre desafíos reales de ese sector. Los desafíos definitivos se presentan en la apertura.</p>
+                <p>Cada equipo elige uno de los tres tracks del evento —Rovers, Blockchain y Datos y Streaming— y desarrolla una solución sobre desafíos reales de ese sector. Los desafíos definitivos se presentan en la apertura.</p>
               </div>
             </div>
           </details>
@@ -1299,6 +1323,11 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
                  loading="lazy" decoding="async" width="231" height="30">
             <span class="sponsor-tile-name">Oracle</span>
           </a>
+          <a class="sponsor-tile" href="https://qualydata.com/" target="_blank" rel="noopener noreferrer">
+            <img src="assets/sponsors/qualydata-logo.svg" alt="QualyData"
+                 loading="lazy" decoding="async" width="240" height="56">
+            <span class="sponsor-tile-name">QualyData</span>
+          </a>
           <a class="sponsor-tile" href="https://www.alchemia-tech.com/" target="_blank" rel="noopener noreferrer">
             <img src="assets/sponsors/alchemia-blanco.jpg" alt="Alchemia LLC"
                  loading="lazy" decoding="async" width="1160" height="188">
@@ -1333,11 +1362,6 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
             <img src="assets/sponsors/economia-logo.png" alt="Gobierno de la Provincia de Salta — Ministerio de Economía y Servicios Públicos"
                  loading="lazy" decoding="async" width="1702" height="1953">
             <span class="sponsor-tile-name">Economía del Conocimiento · Salta</span>
-          </a>
-          <a class="sponsor-tile" href="https://qualydata.com/" target="_blank" rel="noopener noreferrer">
-            <img src="assets/sponsors/qualydata-logo.svg" alt="QualyData"
-                 loading="lazy" decoding="async" width="240" height="56">
-            <span class="sponsor-tile-name">QualyData</span>
           </a>
           <div class="sponsor-tile">
             <span class="sponsor-acronym">FIDR</span>
