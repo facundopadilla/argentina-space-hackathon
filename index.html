@@ -752,6 +752,27 @@
     .sponsor-tile img.logo-oracle {
       max-width: calc(78% * var(--oracle-ratio) * 1.134);
     }
+    /* Hacki: lockup 2,87:1 (personaje + palabra). A 52px de alto el personaje
+       domina la tarjeta; a 44px la palabra "Hacki" queda del mismo peso que
+       Alchemia/Propulsar y las púas conservan aire de sobra dentro de la tarjeta
+       (regla del media kit: espacio libre >= alto de las púas). Sin tocar el SVG. */
+    .sponsor-tile img.logo-hacki {
+      max-height: 44px;
+    }
+    /* Si el último tile queda solo en su fila, se centra en lugar de quedar
+       huérfano a la izquierda: 2 columnas en móvil (fila completa) y 2 columnas
+       centradas de 4 desde 720px. No agrega tiles. */
+    .sponsor-grid > :last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+    @media (min-width: 720px) {
+      .sponsor-grid > :last-child:nth-child(odd) {
+        grid-column: auto;
+      }
+      .sponsor-grid > :last-child:nth-child(4n + 1) {
+        grid-column: 2 / span 2;
+      }
+    }
     /* ---------- Community partners (carrusel infinito) ----------
        Dos mitades idénticas en una pista; la pista se desplaza -50% y
        reinicia sin salto. La segunda mitad es aria-hidden. Se pausa con
@@ -764,7 +785,11 @@
     .community-track {
       display: flex;
       width: max-content;
-      animation: community-scroll 90s linear infinite;
+      /* Velocidad ≈ 100 px/s: la duración crece con la longitud del set
+         (con 11 logos eran 90s; al sumar Crecimiento, 12 logos y ~12 % más
+         largo, 100s mantiene la misma velocidad percibida). Si cambia la
+         cantidad de logos, escalar la duración en proporción. */
+      animation: community-scroll 100s linear infinite;
     }
     .community-marquee:hover .community-track,
     .community-marquee:focus-within .community-track {
@@ -1417,7 +1442,7 @@
         <header class="section-head">
           <p class="section-num"><span class="section-num-zero">0</span>4</p>
           <h2 class="section-title">Recursos</h2>
-          <p class="section-lede">Todo lo necesario para participar: documentos oficiales, documentación técnica y los canales de la comunidad.</p>
+          <p class="section-lede">Todo lo necesario para participar: documentos oficiales, documentación técnica, herramientas y los canales de la comunidad.</p>
         </header>
 
         <div class="resource-group">
@@ -1460,6 +1485,20 @@ APIs y documentación ............ se publican antes del evento
 Guía de entrega de proyectos .... se publica antes del evento
 
 Consultas técnicas: marketing@argentinaspace.com</code></pre>
+          </div>
+        </div>
+
+        <div class="resource-group">
+          <h3>Herramientas</h3>
+          <p class="resource-guide">La herramienta que vamos a utilizar para los proyectos del hackathon.</p>
+          <div class="resource-doc-list">
+            <div class="resource-doc">
+              <div class="resource-doc-info">
+                <strong>Hacki</strong>
+                <span>Herramienta para organizar hackathons, hecha por quienes los organizan. Le da a cada proyecto y a cada detalle del evento una página pública donde participantes y proyectos pueden encontrarse.</span>
+              </div>
+              <a class="btn btn-ghost" href="https://hacki.crecimiento.build" target="_blank" rel="noopener noreferrer">Conocer Hacki</a>
+            </div>
           </div>
         </div>
 
@@ -1601,6 +1640,11 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
                  loading="lazy" decoding="async" width="240" height="56">
             <span class="sponsor-tile-name">QualyData</span>
           </a>
+          <a class="sponsor-tile" href="https://hacki.crecimiento.build" target="_blank" rel="noopener noreferrer">
+            <img class="logo-hacki" src="assets/sponsors/hacki-logo.svg" alt="Hacki"
+                 loading="lazy" decoding="async" width="2583" height="900">
+            <span class="sponsor-tile-name">Hacki</span>
+          </a>
           <a class="sponsor-tile" href="https://www.alchemia-tech.com/" target="_blank" rel="noopener noreferrer">
             <img src="assets/sponsors/alchemia-blanco.jpg" alt="Alchemia LLC"
                  loading="lazy" decoding="async" width="1160" height="188">
@@ -1676,6 +1720,7 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
             <div class="community-logo community-logo-icon"><img src="assets/community/saltagamedevs.png" alt="Salta Game Devs" loading="lazy" decoding="async" width="689" height="300"></div>
             <div class="community-logo community-logo-icon"><a href="https://qilinforge.com/" target="_blank" rel="noopener noreferrer"><img src="assets/community/qilinforge.png" alt="" loading="lazy" decoding="async" width="300" height="300"><span class="community-label">Qilin Forge</span></a></div>
             <div class="community-logo"><img src="assets/community/fichitabit.png" alt="Fichita Bit, coworking, café y bar" loading="lazy" decoding="async" width="1255" height="300"></div>
+            <div class="community-logo"><a href="https://crecimiento.build" target="_blank" rel="noopener noreferrer"><img src="assets/community/crecimiento.png" alt="Crecimiento" loading="lazy" decoding="async" width="1534" height="300"></a></div>
           </div>
           <div class="community-set" aria-hidden="true">
             <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://novasurecosistema.com/" target="_blank" rel="noopener noreferrer"><img src="assets/community/novasur.png" alt="Novasür" loading="lazy" decoding="async" width="401" height="300"></a></div>
@@ -1689,6 +1734,7 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
             <div class="community-logo community-logo-icon"><img src="assets/community/saltagamedevs.png" alt="Salta Game Devs" loading="lazy" decoding="async" width="689" height="300"></div>
             <div class="community-logo community-logo-icon"><a href="https://qilinforge.com/" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/community/qilinforge.png" alt="" loading="lazy" decoding="async" width="300" height="300"><span class="community-label">Qilin Forge</span></a></div>
             <div class="community-logo"><img src="assets/community/fichitabit.png" alt="Fichita Bit, coworking, café y bar" loading="lazy" decoding="async" width="1255" height="300"></div>
+            <div class="community-logo"><a tabindex="-1" href="https://crecimiento.build" target="_blank" rel="noopener noreferrer"><img src="assets/community/crecimiento.png" alt="Crecimiento" loading="lazy" decoding="async" width="1534" height="300"></a></div>
           </div>
           <div class="community-set" aria-hidden="true">
             <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://novasurecosistema.com/" target="_blank" rel="noopener noreferrer"><img src="assets/community/novasur.png" alt="Novasür" loading="lazy" decoding="async" width="401" height="300"></a></div>
@@ -1702,6 +1748,7 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
             <div class="community-logo community-logo-icon"><img src="assets/community/saltagamedevs.png" alt="Salta Game Devs" loading="lazy" decoding="async" width="689" height="300"></div>
             <div class="community-logo community-logo-icon"><a href="https://qilinforge.com/" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/community/qilinforge.png" alt="" loading="lazy" decoding="async" width="300" height="300"><span class="community-label">Qilin Forge</span></a></div>
             <div class="community-logo"><img src="assets/community/fichitabit.png" alt="Fichita Bit, coworking, café y bar" loading="lazy" decoding="async" width="1255" height="300"></div>
+            <div class="community-logo"><a tabindex="-1" href="https://crecimiento.build" target="_blank" rel="noopener noreferrer"><img src="assets/community/crecimiento.png" alt="Crecimiento" loading="lazy" decoding="async" width="1534" height="300"></a></div>
           </div>
           <div class="community-set" aria-hidden="true">
             <div class="community-logo community-logo-icon"><a tabindex="-1" href="https://novasurecosistema.com/" target="_blank" rel="noopener noreferrer"><img src="assets/community/novasur.png" alt="Novasür" loading="lazy" decoding="async" width="401" height="300"></a></div>
@@ -1715,6 +1762,7 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
             <div class="community-logo community-logo-icon"><img src="assets/community/saltagamedevs.png" alt="Salta Game Devs" loading="lazy" decoding="async" width="689" height="300"></div>
             <div class="community-logo community-logo-icon"><a href="https://qilinforge.com/" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/community/qilinforge.png" alt="" loading="lazy" decoding="async" width="300" height="300"><span class="community-label">Qilin Forge</span></a></div>
             <div class="community-logo"><img src="assets/community/fichitabit.png" alt="Fichita Bit, coworking, café y bar" loading="lazy" decoding="async" width="1255" height="300"></div>
+            <div class="community-logo"><a tabindex="-1" href="https://crecimiento.build" target="_blank" rel="noopener noreferrer"><img src="assets/community/crecimiento.png" alt="Crecimiento" loading="lazy" decoding="async" width="1534" height="300"></a></div>
           </div>
         </div>
       </div>
@@ -2196,7 +2244,7 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
             /* Bloques simples: fundido ascendente.
                .sponsor-cta vive pegada debajo de .sponsor-grid (cascada
                de N tiles: (N − 1) × stagger 0.12s + duration 0.7s hasta que
-               el último termina; hoy N = 12 ≈ 2.02s). Su propio ScrollTrigger dispara
+               el último termina; hoy N = 13 ≈ 2.14s). Su propio ScrollTrigger dispara
                casi al mismo tiempo que el del grid por la poca distancia
                entre ambos, así que sin demora esta tarjeta podía llegar
                a su reposo (y:0) mientras el último tile del grid todavía
