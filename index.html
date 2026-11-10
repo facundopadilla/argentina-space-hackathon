@@ -759,9 +759,17 @@
     .sponsor-tile img.logo-hacki {
       max-height: 44px;
     }
-    /* Si el último tile queda solo en su fila, se centra en lugar de quedar
-       huérfano a la izquierda: 2 columnas en móvil (fila completa) y 2 columnas
-       centradas de 4 desde 720px. No agrega tiles. */
+    /* Última fila incompleta: se centra en lugar de quedar pegada a la
+       izquierda. Selectores genéricos (no dependen de la cantidad de tiles) y
+       sin tiles falsos.
+       - 2 columnas (móvil): si queda 1 tile suelto, ocupa la fila completa
+         (con un total par no hay tile suelto).
+       - 4 columnas (≥720px), por resto de N ÷ 4:
+           · 1 suelto (N = 4k+1): columnas 2-3 (ocupa 2, centrado).
+           · 2 sueltos (N = 4k+2): columnas 2 y 3 (centrados).
+           · 3 sueltos (N = 4k+3): quedan en columnas 1-3, alineados a la
+             izquierda (no se centran: con 4 columnas no hay forma simétrica de
+             ubicar 3 tiles de 1 columna; hoy N = 14 → caso de 2 sueltos). */
     .sponsor-grid > :last-child:nth-child(odd) {
       grid-column: 1 / -1;
     }
@@ -771,6 +779,12 @@
       }
       .sponsor-grid > :last-child:nth-child(4n + 1) {
         grid-column: 2 / span 2;
+      }
+      .sponsor-grid > :nth-last-child(2):nth-child(4n + 1) {
+        grid-column: 2;
+      }
+      .sponsor-grid > :last-child:nth-child(4n + 2) {
+        grid-column: 3;
       }
     }
     /* ---------- Community partners (carrusel infinito) ----------
@@ -1645,6 +1659,11 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
                  loading="lazy" decoding="async" width="2583" height="900">
             <span class="sponsor-tile-name">Hacki</span>
           </a>
+          <a class="sponsor-tile" href="https://devin.ai" target="_blank" rel="noopener noreferrer">
+            <img src="assets/sponsors/devin-logo.svg" alt="Devin"
+                 loading="lazy" decoding="async" width="497" height="133">
+            <span class="sponsor-tile-name">Devin</span>
+          </a>
           <a class="sponsor-tile" href="https://www.alchemia-tech.com/" target="_blank" rel="noopener noreferrer">
             <img src="assets/sponsors/alchemia-blanco.jpg" alt="Alchemia LLC"
                  loading="lazy" decoding="async" width="1160" height="188">
@@ -2244,7 +2263,7 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
             /* Bloques simples: fundido ascendente.
                .sponsor-cta vive pegada debajo de .sponsor-grid (cascada
                de N tiles: (N − 1) × stagger 0.12s + duration 0.7s hasta que
-               el último termina; hoy N = 13 ≈ 2.14s). Su propio ScrollTrigger dispara
+               el último termina; hoy N = 14 ≈ 2.26s). Su propio ScrollTrigger dispara
                casi al mismo tiempo que el del grid por la poca distancia
                entre ambos, así que sin demora esta tarjeta podía llegar
                a su reposo (y:0) mientras el último tile del grid todavía
