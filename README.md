@@ -39,8 +39,8 @@ está en el repo. `vercel.json` habilita `cleanUrls`.
 ## Pendientes
 
 El HTML contiene marcadores `TODO(...)` y `SLOT(...)` con contenido interino
-que falta confirmar o completar (inscripción vía Luma, video del hero, jurado,
-premios, agenda, FAQ, política de privacidad, etc.). Buscarlos con:
+que falta confirmar o completar (video del hero, jurado,
+agenda, FAQ, política de privacidad, etc.). Buscarlos con:
 
 ```bash
 grep -rn "TODO(\|SLOT(" *.html
