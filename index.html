@@ -149,6 +149,44 @@
       color: var(--color-white-75);
       font-size: clamp(0.95rem, 0.9rem + 0.3vw, 1.05rem);
     }
+    /* Aliados en la portada: logos blancos tal como vienen, sin cajas ni
+       efectos. Misma altura para los dos (el lockup de Cognition es más ancho,
+       5,1:1 contra 3,8:1 de Devin). Los links tienen 44px de alto táctil por
+       padding vertical sin cambiar el tamaño visual del logo. */
+    .hero-partners {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0 clamp(28px, 5vw, 56px);
+    }
+    .hero-partners-label {
+      flex-basis: 100%;
+      margin-bottom: 2px;
+      font-family: var(--font-alt);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      color: var(--color-white-60);
+    }
+    .hero-partners-note {
+      flex-basis: 100%;
+      margin-top: 4px;
+      font-size: clamp(0.9rem, 0.86rem + 0.2vw, 1rem);
+      font-weight: 500;
+      color: var(--color-white-90);
+    }
+    .hero-partners a {
+      display: flex;
+      align-items: center;
+      min-height: 44px;
+      border-radius: 6px;
+    }
+    .hero-partners img {
+      display: block;
+      height: clamp(24px, 1.2rem + 0.9vw, 32px);
+      width: auto;
+    }
     .hero-ctas {
       margin-top: var(--spacing-fluid-sm);
       display: flex;
@@ -187,6 +225,7 @@
     .hero-title { animation: hero-fade-up 0.9s var(--ease-out-expo) 0.3s both; }
     .hero-meta { animation: hero-fade-up 0.9s var(--ease-out-expo) 0.42s both; }
     .hero-lede { animation: hero-fade-up 0.9s var(--ease-out-expo) 0.52s both; }
+    .hero-partners { animation: hero-fade-up 0.9s var(--ease-out-expo) 0.57s both; }
     .hero-ctas { animation: hero-fade-up 0.9s var(--ease-out-expo) 0.62s both; }
     .hero-corners { animation: hero-fade-up 0.9s var(--ease-out-expo) 0.75s both; }
 
@@ -759,32 +798,52 @@
     .sponsor-tile img.logo-hacki {
       max-height: 44px;
     }
+    /* Devin (3,8:1, hexágono + palabra con mayúsculas altas) a 52px de alto
+       pesa más que Cognition (5,1:1) y que el resto; a 40px las dos palabras
+       quedan del mismo tamaño óptico. Los PNG no se tocan. */
+    .sponsor-tile img.logo-devin {
+      max-height: 40px;
+    }
     /* Última fila incompleta: se centra en lugar de quedar pegada a la
        izquierda. Selectores genéricos (no dependen de la cantidad de tiles) y
        sin tiles falsos.
        - 2 columnas (móvil): si queda 1 tile suelto, ocupa la fila completa
          (con un total par no hay tile suelto).
-       - 4 columnas (≥720px), por resto de N ÷ 4:
-           · 1 suelto (N = 4k+1): columnas 2-3 (ocupa 2, centrado).
-           · 2 sueltos (N = 4k+2): columnas 2 y 3 (centrados).
-           · 3 sueltos (N = 4k+3): quedan en columnas 1-3, alineados a la
-             izquierda (no se centran: con 4 columnas no hay forma simétrica de
-             ubicar 3 tiles de 1 columna; hoy N = 14 → caso de 2 sueltos). */
+       - ≥720px: la grilla de 4 columnas pasa a 8 columnas "finas" donde cada
+         tile ocupa 2. El tamaño de los tiles es idéntico al de 4 columnas
+         ((W − 3g) ÷ 4), pero ahora hay posiciones a media tile, así que 1, 2 y
+         3 tiles sueltos (resto de N ÷ 4) pueden centrarse de forma simétrica:
+           · 1 suelto  → columnas 4-5
+           · 2 sueltos → columnas 3-4 y 5-6
+           · 3 sueltos → columnas 2-3, 4-5 y 6-7
+         Hoy N = 15 → caso de 3 sueltos. */
     .sponsor-grid > :last-child:nth-child(odd) {
       grid-column: 1 / -1;
     }
     @media (min-width: 720px) {
-      .sponsor-grid > :last-child:nth-child(odd) {
-        grid-column: auto;
+      .sponsor-grid {
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+      }
+      .sponsor-grid > * {
+        grid-column: span 2;
       }
       .sponsor-grid > :last-child:nth-child(4n + 1) {
-        grid-column: 2 / span 2;
+        grid-column: 4 / span 2;
       }
       .sponsor-grid > :nth-last-child(2):nth-child(4n + 1) {
-        grid-column: 2;
+        grid-column: 3 / span 2;
       }
       .sponsor-grid > :last-child:nth-child(4n + 2) {
-        grid-column: 3;
+        grid-column: 5 / span 2;
+      }
+      .sponsor-grid > :nth-last-child(3):nth-child(4n + 1) {
+        grid-column: 2 / span 2;
+      }
+      .sponsor-grid > :nth-last-child(2):nth-child(4n + 2) {
+        grid-column: 4 / span 2;
+      }
+      .sponsor-grid > :last-child:nth-child(4n + 3) {
+        grid-column: 6 / span 2;
       }
     }
     /* ---------- Community partners (carrusel infinito) ----------
@@ -1009,7 +1068,7 @@
 
     /* ---------- Movimiento reducido ---------- */
     @media (prefers-reduced-motion: reduce) {
-      .hero-logo, .hero-title, .hero-meta, .hero-lede, .hero-ctas, .hero-corners {
+      .hero-logo, .hero-title, .hero-meta, .hero-lede, .hero-partners, .hero-ctas, .hero-corners {
         animation: none;
       }
       .faq-summary,
@@ -1096,6 +1155,12 @@
         <h1 class="hero-title">Hackathon Argentina Space 2026</h1>
         <p class="hero-meta">11, 12 y 13 de noviembre · Centro de Convenciones de Salta</p>
         <p class="hero-lede">Tres días de trabajo intensivo para crear soluciones sobre los sectores donde la economía espacial argentina ya tiene impacto.</p>
+        <div class="hero-partners">
+          <p class="hero-partners-label">Con el apoyo de</p>
+          <a href="https://devin.ai" target="_blank" rel="noopener noreferrer"><img src="assets/sponsors/devin-logo.png" alt="Devin" width="1128" height="300"></a>
+          <a href="https://cognition.com" target="_blank" rel="noopener noreferrer"><img src="assets/sponsors/cognition-logo.png" alt="Cognition" width="1541" height="300"></a>
+          <p class="hero-partners-note">Todos los participantes presenciales tendrán créditos de Devin AI.</p>
+        </div>
         <div class="hero-ctas">
           <a class="btn btn-primary" href="https://luma.com/ivdtiv4q" target="_blank" rel="noopener noreferrer">Inscribite al hackathon</a>
           <a class="btn btn-ghost" href="#agenda">Ver agenda</a>
@@ -1634,15 +1699,15 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
         </header>
 
         <div class="sponsor-grid" data-reveal="stagger">
-          <a class="sponsor-tile" href="https://www.avalanche.com/" target="_blank" rel="noopener noreferrer">
-            <img src="assets/sponsors/avalanche-logo.svg" alt="Avalanche (AVAX)"
-                 loading="lazy" decoding="async" width="815" height="120">
-            <span class="sponsor-tile-name">Avalanche</span>
+          <a class="sponsor-tile" href="https://devin.ai" target="_blank" rel="noopener noreferrer">
+            <img class="logo-devin" src="assets/sponsors/devin-logo.png" alt="Devin"
+                 loading="lazy" decoding="async" width="1128" height="300">
+            <span class="sponsor-tile-name">Devin</span>
           </a>
-          <a class="sponsor-tile" href="https://www.team1.network/" target="_blank" rel="noopener noreferrer">
-            <img class="sponsor-logo-compact" src="assets/sponsors/team1-logo.svg" alt="Team1"
-                 loading="lazy" decoding="async" width="1027" height="289">
-            <span class="sponsor-tile-name">Team1</span>
+          <a class="sponsor-tile" href="https://cognition.com" target="_blank" rel="noopener noreferrer">
+            <img src="assets/sponsors/cognition-logo.png" alt="Cognition"
+                 loading="lazy" decoding="async" width="1541" height="300">
+            <span class="sponsor-tile-name">Cognition</span>
           </a>
           <a class="sponsor-tile" href="https://www.oracle.com/" target="_blank" rel="noopener noreferrer">
             <img class="logo-oracle" src="assets/sponsors/oracle-logo.svg" alt="Oracle"
@@ -1658,11 +1723,6 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
             <img class="logo-hacki" src="assets/sponsors/hacki-logo.svg" alt="Hacki"
                  loading="lazy" decoding="async" width="2583" height="900">
             <span class="sponsor-tile-name">Hacki</span>
-          </a>
-          <a class="sponsor-tile" href="https://devin.ai" target="_blank" rel="noopener noreferrer">
-            <img src="assets/sponsors/devin-logo.svg" alt="Devin"
-                 loading="lazy" decoding="async" width="497" height="133">
-            <span class="sponsor-tile-name">Devin</span>
           </a>
           <a class="sponsor-tile" href="https://www.alchemia-tech.com/" target="_blank" rel="noopener noreferrer">
             <img src="assets/sponsors/alchemia-blanco.jpg" alt="Alchemia LLC"
@@ -1703,6 +1763,16 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
             <span class="sponsor-acronym">FIDR</span>
             <span class="sponsor-tile-name">Foro de Integración y Desarrollo Regional Santa Fe</span>
           </div>
+          <a class="sponsor-tile" href="https://www.avalanche.com/" target="_blank" rel="noopener noreferrer">
+            <img src="assets/sponsors/avalanche-logo.svg" alt="Avalanche (AVAX)"
+                 loading="lazy" decoding="async" width="815" height="120">
+            <span class="sponsor-tile-name">Avalanche</span>
+          </a>
+          <a class="sponsor-tile" href="https://www.team1.network/" target="_blank" rel="noopener noreferrer">
+            <img class="sponsor-logo-compact" src="assets/sponsors/team1-logo.svg" alt="Team1"
+                 loading="lazy" decoding="async" width="1027" height="289">
+            <span class="sponsor-tile-name">Team1</span>
+          </a>
         </div>
 
         <div class="card sponsor-cta" data-reveal>
@@ -2263,7 +2333,7 @@ Consultas técnicas: marketing@argentinaspace.com</code></pre>
             /* Bloques simples: fundido ascendente.
                .sponsor-cta vive pegada debajo de .sponsor-grid (cascada
                de N tiles: (N − 1) × stagger 0.12s + duration 0.7s hasta que
-               el último termina; hoy N = 14 ≈ 2.26s). Su propio ScrollTrigger dispara
+               el último termina; hoy N = 15 ≈ 2.38s). Su propio ScrollTrigger dispara
                casi al mismo tiempo que el del grid por la poca distancia
                entre ambos, así que sin demora esta tarjeta podía llegar
                a su reposo (y:0) mientras el último tile del grid todavía
